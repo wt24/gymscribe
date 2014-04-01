@@ -20,4 +20,5 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:+'
+    compile files('libs/TarsosDSP-1.7-bin.jar')
 }
