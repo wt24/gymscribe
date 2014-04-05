@@ -10,6 +10,8 @@ import android.widget.Button;
 
 public class RecordActivity extends BaseNavigationDrawerActivity {
 
+    private boolean isRecording = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mainLayoutId = R.layout.activity_record;
@@ -40,7 +42,16 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
 
     public void recordButtonPressed(View view) {
         Button b = (Button) findViewById(R.id.recordButton);
-        b.setBackgroundColor(getResources().getColor(R.color.round));
+        isRecording = !isRecording;
+
+        if (isRecording) {
+            b.setText("Stop");
+            b.setBackground(getResources().getDrawable(R.drawable.cancel_button_style));
+        }
+        else {
+            b.setText("Record");
+            b.setBackground(getResources().getDrawable(R.drawable.record_button_style));
+        }
     }
 
 }

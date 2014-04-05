@@ -26,7 +26,7 @@ android:layout_height="match_parent">
         android:text="Record"
         android:textSize="12pt"
         android:id="@+id/recordButton"
-        android:background="@drawable/roundedbutton"
+        android:background="@drawable/record_button_style"
         android:onClick="recordButtonPressed"
         android:layout_gravity="left|bottom" />
 
