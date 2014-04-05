@@ -21,7 +21,7 @@
             android:label="@string/title_activity_record" >
         </activity>
         <activity
-            android:name="edu.berkeley.cs160.lasercats.PastActivity"
+            android:name="edu.berkeley.cs160.lasercats.HistoryActivity"
             android:label="@string/title_activity_past" >
         </activity>
         <activity

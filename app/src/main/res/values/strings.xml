@@ -10,7 +10,7 @@
 
     <string-array name="navi_items_array">
         <item>Exercises</item>
-        <item>Past</item>
+        <item>History</item>
         <item>Settings</item>
     </string-array>
 
