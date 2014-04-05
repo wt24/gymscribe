@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="edu.berkeley.cs160.lasercats.RecordActivity"
+            android:label="@string/title_activity_record" >
+        </activity>
     </application>
 
 </manifest>
