@@ -12,14 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends BaseNavigationDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        positionOfActivityInList = 0;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
         startActivity(new Intent(this, RecordActivity.class));
-
     }
 
 

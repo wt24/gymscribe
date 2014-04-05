@@ -1,19 +1,19 @@
 package edu.berkeley.cs160.lasercats;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
-
-public class RecordActivity extends BaseNavigationDrawerActivity {
+public class SettingsActivity extends BaseNavigationDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record);
+        setContentView(R.layout.activity_main);
+        startActivity(new Intent(this, RecordActivity.class));
+
     }
 
 
@@ -21,7 +21,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.record, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -35,11 +35,6 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void recordButtonPressed(View view) {
-        Button b = (Button) findViewById(R.id.recordButton);
-        b.setBackgroundColor(getResources().getColor(R.color.round));
     }
 
 }
