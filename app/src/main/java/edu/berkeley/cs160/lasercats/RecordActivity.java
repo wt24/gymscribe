@@ -12,8 +12,9 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mainLayoutId = R.layout.activity_record;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record);
+
     }
 
 

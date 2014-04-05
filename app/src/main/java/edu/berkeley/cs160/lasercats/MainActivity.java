@@ -17,8 +17,8 @@ public class MainActivity extends BaseNavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         positionOfActivityInList = 0;
+        mainLayoutId = R.layout.activity_main;
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
         startActivity(new Intent(this, RecordActivity.class));
     }
 
