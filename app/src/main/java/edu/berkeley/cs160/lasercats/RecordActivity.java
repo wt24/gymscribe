@@ -4,6 +4,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class RecordActivity extends ActionBarActivity {
@@ -33,6 +35,11 @@ public class RecordActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void recordButtonPressed(View view) {
+        Button b = (Button) findViewById(R.id.recordButton);
+        b.setBackgroundColor(getResources().getColor(R.color.round));
     }
 
 }
