@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -19,10 +23,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends BaseNavigationDrawerActivity {
 
-    List<Map<String,String>> exerciseList = new ArrayList<Map<String, String>>();
+    String[] exercises;
+    EditText searchBar;
+    ArrayAdapter currentAdapter;
+    ListView exerciseList;
 
 
     @Override
@@ -30,22 +39,26 @@ public class MainActivity extends BaseNavigationDrawerActivity {
         positionOfActivityInList = 0;
         mainLayoutId = R.layout.activity_main;
         super.onCreate(savedInstanceState);
-        //startActivity(new Intent(this, RecordActivity.class));
 
-        initList();
-        ListView listView = (ListView) findViewById(R.id.listView);
+        android.app.ActionBar ab = getActionBar();
+        ab.setTitle("Choose a Workout");
+        
+        exerciseList = (ListView) findViewById(R.id.listView);
 
-        SimpleAdapter simpleAdapter = new SimpleAdapter(this, exerciseList, R.layout.exercise_list_cell, new String[] {"exercise"}, new int[] {R.id.cellTextView});
-        listView.setAdapter(simpleAdapter);
+        exercises = getResources().getStringArray(R.array.exercise_items_array);
+        currentAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.excercise_list_item, exercises);
+        exerciseList.setAdapter(currentAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        exerciseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), RecordActivity.class);
-                intent.putExtra("exercise", exerciseList.get(i).get("exercise"));
+                intent.putExtra("exercise", exercises[i]);
                 startActivity(intent);
             }
         });
+
+        setupSearchBar();
     }
 
 
@@ -69,21 +82,42 @@ public class MainActivity extends BaseNavigationDrawerActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * ListView Methods
-     */
+    private void setupSearchBar() {
+        searchBar = (EditText) findViewById(R.id.editText);
 
-    private void initList() {
-        exerciseList.add(createExercise("exercise", "Bench Press"));
-        exerciseList.add(createExercise("exercise", "Pushups"));
-        exerciseList.add(createExercise("exercise", "Pullups"));
-        exerciseList.add(createExercise("exercise", "Chest Press"));
+        searchBar.setHint("Search for an Exercise");
+        searchBar.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) { }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s == null || s.toString().equals("")) {
+                    currentAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.excercise_list_item, exercises);
+                    exerciseList.setAdapter(currentAdapter);
+                    return;
+                }
+                String userInput = s.toString();
+                String exercise;
+
+                Pattern regexFromUserInput = Pattern.compile(".*" + userInput + ".*", Pattern.CASE_INSENSITIVE);
+                Matcher patternMatch;
+                ArrayList<String> newNavigationItems = new ArrayList<String>();
+                for (int i = 0; i < exercises.length; i++) {
+                    exercise = exercises[i];
+                    patternMatch = regexFromUserInput.matcher(exercise);
+                    if(patternMatch.matches()) {
+                        newNavigationItems.add(exercise);
+                    }
+                }
+                currentAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.excercise_list_item, newNavigationItems);
+                exerciseList.setAdapter(currentAdapter);
+
+            }
+        });
     }
 
-    private HashMap<String, String> createExercise(String key, String value) {
-        HashMap<String, String> map = new HashMap<String, String>();
-        map.put(key, value);
-        return map;
-    }
 
 }
