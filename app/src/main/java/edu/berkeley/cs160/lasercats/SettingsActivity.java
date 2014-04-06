@@ -11,7 +11,7 @@ public class SettingsActivity extends BaseNavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         positionOfActivityInList = 2;
-        mainLayoutId = R.layout.activity_main;
+        mainLayoutId = R.layout.activity_template;
         super.onCreate(savedInstanceState);
     }
 
