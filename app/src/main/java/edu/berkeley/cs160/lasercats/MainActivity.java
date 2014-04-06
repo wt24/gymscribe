@@ -42,7 +42,7 @@ public class MainActivity extends BaseNavigationDrawerActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), RecordActivity.class);
-                intent.putExtra("exercise", i);
+                intent.putExtra("exercise", exerciseList.get(i).get("exercise"));
                 startActivity(intent);
             }
         });
