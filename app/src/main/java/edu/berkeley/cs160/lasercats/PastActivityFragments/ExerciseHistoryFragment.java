@@ -58,7 +58,7 @@ public class ExerciseHistoryFragment extends Fragment {
         calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                masterActivityCallback.switchToCalendarFor(exerciseName);
             }
         });
 
