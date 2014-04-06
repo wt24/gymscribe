@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,6 +44,12 @@ public class SelectExerciseFragment extends Fragment {
         mNavigationItems = getResources().getStringArray(R.array.exercise_items_array);
         mExerciseList = (ListView) rootView.findViewById(R.id.listOfExercises);
         currentAdapter = new ArrayAdapter<String>(getActivity(), R.layout.excercise_list_item, mNavigationItems);
+        currentAdapter.sort(new Comparator<String>() {
+            @Override
+            public int compare(String lhs, String rhs) {
+                return lhs.compareTo(rhs);   //or whatever your sorting algorithm
+            }
+        });
 
         mExerciseList.setAdapter(currentAdapter);
 
