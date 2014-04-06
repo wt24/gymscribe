@@ -10,8 +10,38 @@
 
     <string-array name="navi_items_array">
         <item>Exercises</item>
-        <item>Past</item>
+        <item>History</item>
         <item>Settings</item>
+    </string-array>
+
+    <string-array name="exercise_items_array">
+        <item>Squat</item>
+        <item>Leg press</item>
+        <item>Lunge</item>
+        <item>Deadlift</item>
+        <item>Leg extension</item>
+        <item>Leg curl</item>
+        <item>Standing calf raise</item>
+        <item>Seated calf raise</item>
+        <item>Hip adductor</item>
+        <item>Bench press</item>
+        <item>Chest fly</item>
+        <item>Push-up</item>
+        <item>Pulldown</item>
+        <item>Pull-up</item>
+        <item>Bent-over row</item>
+        <item>Upright row</item>
+        <item>Shoulder press</item>
+        <item>Shoulder fly</item>
+        <item>Lateral raise</item>
+        <item>Shoulder shrug</item>
+        <item>Pushdown</item>
+        <item>Triceps extension</item>
+        <item>Biceps curl</item>
+        <item>Crunch</item>
+        <item>Russian twist</item>
+        <item>Leg raise</item>
+        <item>Back extension</item>
     </string-array>
 
     <string name="drawer_open">Hi</string>
