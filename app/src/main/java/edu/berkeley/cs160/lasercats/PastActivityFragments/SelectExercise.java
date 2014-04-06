@@ -56,7 +56,7 @@ public class SelectExercise extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_select_exercisw_inner, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_select_exercise_inner, container, false);
             return rootView;
         }
     }
