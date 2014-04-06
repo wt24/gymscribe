@@ -30,22 +30,18 @@
         android:layout_height="match_parent"
         android:background="@color/closeyoureyes">
 
-        <TextView
-            android:layout_width="377dp"
-            android:layout_height="78dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="SELECT AN EXERCISE"
-            android:id="@+id/title"
-            android:gravity="center"
-            android:textSize="15pt"
-            android:textColor="@color/fishfood"
-            android:layout_gravity="center_horizontal|top" />
-
         <ListView
             android:layout_width="wrap_content"
-            android:layout_height="455dp"
+            android:layout_height="414dp"
             android:id="@+id/listView"
             android:layout_gravity="center_horizontal|bottom" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="63dp"
+            android:id="@+id/editText"
+            android:layout_gravity="right|top" />
+
     </FrameLayout>
 
     <!-- android:layout_gravity="start" tells DrawerLayout to treat
