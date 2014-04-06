@@ -16,7 +16,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         mainLayoutId = R.layout.activity_record;
         super.onCreate(savedInstanceState);
-
+        System.out.println(getIntent().getExtras().get("exercise"));
     }
 
 
