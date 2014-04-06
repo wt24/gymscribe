@@ -25,6 +25,7 @@ android:layout_height="match_parent">
         android:layout_marginLeft="10dp"
         android:text="Record"
         android:textSize="12pt"
+        android:textColor="@color/closeyoureyes"
         android:id="@+id/recordButton"
         android:background="@drawable/record_button_style"
         android:onClick="recordButtonPressed"
