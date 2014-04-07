@@ -36,7 +36,7 @@
 
         <ListView
             android:layout_width="fill_parent"
-            android:layout_height="466dp"
+            android:layout_height="403dp"
             android:id="@+id/listView"
             android:layout_gravity="center_horizontal|bottom" />
 
