@@ -3,6 +3,7 @@ package edu.berkeley.cs160.lasercats;
 import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,7 +37,8 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         mainLayoutId = R.layout.activity_record;
         super.onCreate(savedInstanceState);
-        System.out.println(getIntent().getExtras().get("exercise"));
+        android.app.ActionBar ab = getActionBar();
+        ab.setTitle((String) getIntent().getExtras().get("exercise"));
 
         String[] exercises = new String[]{
                 "Set 1: 4.0 lbs x 8 reps",
@@ -93,6 +95,25 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
 
     }
 
+    public void wizardAdd() {
+        new CountDownTimer(5000,1000) {
+            public void onTick(long millisUntilFinished) {
+                //do nothing
+            }
+            public void onFinish() {
+                RecordActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        arr.add("Set 7: 150.0 lbs x 8000 reps");
+                        adapter.notifyDataSetChanged();
+                        adapter.notifyDataSetInvalidated();
+                    }
+                });
+            }
+        }.start();
+
+
+    }
 
 
         //Start Editing Button
@@ -137,6 +158,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
         if (isRecording) {
             b.setText("Stop");
             b.setBackground(getResources().getDrawable(R.drawable.cancel_button_style));
+            wizardAdd();
         }
         else {
             b.setText("Record");

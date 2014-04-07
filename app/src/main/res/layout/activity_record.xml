@@ -18,6 +18,13 @@ android:layout_height="match_parent">
     android:id="@+id/content_frame">
 
 
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="326dp"
+        android:background="@color/closeyoureyes"
+        android:id="@+id/listView"
+        android:layout_gravity="center_horizontal|top" />
+
     <Button
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -34,20 +41,13 @@ android:layout_height="match_parent">
     <Button
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
-        android:text="Edit"
+        android:layout_marginBottom="10dp"
         android:textSize="12pt"
-        android:id="@+id/editButton"
         android:background="@drawable/roundedbutton"
+        android:text="Edit"
+        android:id="@+id/editButton"
         android:layout_gravity="right|bottom" />
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="326dp"
-        android:background="@color/closeyoureyes"
-        android:id="@+id/listView"
-        android:layout_gravity="center_horizontal|top" />
 
 </FrameLayout>
 
