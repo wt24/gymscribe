@@ -41,7 +41,7 @@ public class MainActivity extends BaseNavigationDrawerActivity {
         super.onCreate(savedInstanceState);
 
         android.app.ActionBar ab = getActionBar();
-        ab.setTitle("Choose a Workout");
+        ab.setTitle("Select a Workout");
         
         exerciseList = (ListView) findViewById(R.id.listView);
 
