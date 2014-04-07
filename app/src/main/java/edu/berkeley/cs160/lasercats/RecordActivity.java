@@ -1,23 +1,113 @@
 package edu.berkeley.cs160.lasercats;
 
+import android.app.LauncherActivity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.app.AlertDialog;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class RecordActivity extends BaseNavigationDrawerActivity {
 
     private boolean isRecording = false;
+    private Button mEditButton;
+    private ListView mListView;
+    private ArrayAdapter<String> adapter;
+    List<String> arr;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mainLayoutId = R.layout.activity_record;
         super.onCreate(savedInstanceState);
         System.out.println(getIntent().getExtras().get("exercise"));
+
+        String[] exercises = new String[]{
+                "Set 1: 4.0 lbs x 8 reps",
+                "Set 2: 5.0 lbs x 10 reps",
+                "Set 3: 2.0 lbs x 11 reps",
+                "Set 4: 4.0 lbs x 11 rep",
+                "Set 5: 5.0 lbs x 12 reps",
+                "Set 6: 6.0 lbs x 110 reps"
+        };
+
+        mListView = (ListView) findViewById(R.id.listView);
+        arr = new ArrayList<String>(Arrays.asList(exercises));
+        adapter = new ArrayAdapter<String>(this, R.layout.row, arr);
+
+        mListView.setAdapter(adapter);
+
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                removeItemFromList(i);
+                return true;
+            }
+        });
     }
+
+    protected void removeItemFromList(int i) {
+        final int deletePosition = i;
+        AlertDialog.Builder alert = new AlertDialog.Builder(
+                RecordActivity.this);
+        alert.setTitle("Delete");
+        alert.setMessage("Do you want delete this item?");
+
+        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+
+                // main code on after clicking yes
+                arr.remove(deletePosition);
+                adapter.notifyDataSetChanged();
+                adapter.notifyDataSetInvalidated();
+
+            }
+        });
+        alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                dialog.dismiss();
+            }
+        });
+
+        alert.show();
+
+    }
+
+
+
+        //Start Editing Button
+    /*
+        mEditButton = (Button) findViewById(R.id.editButton);
+        mEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //do shit
+            }
+        });
+    */
+
+
+
 
 
     @Override
