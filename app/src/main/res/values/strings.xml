@@ -5,8 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_record">RecordActivity</string>
-    <string name="title_activity_past">PastActivity</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_past">History</string>
+    <string name="title_activity_settings">Settings</string>
 
     <string-array name="navi_items_array">
         <item>Exercises</item>
