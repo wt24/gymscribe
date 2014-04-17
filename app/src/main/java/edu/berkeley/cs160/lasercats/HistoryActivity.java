@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import edu.berkeley.cs160.lasercats.PastActivityFragments.ExerciseCalendarFragment;
 import edu.berkeley.cs160.lasercats.PastActivityFragments.ExerciseCallbacks;

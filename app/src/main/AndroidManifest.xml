@@ -3,10 +3,13 @@
     package="edu.berkeley.cs160.lasercats">
 
     <application
+        android:name="com.activeandroid.app.Application"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+        <meta-data android:name="AA_DB_NAME" android:value="exercises.sqlite" />
+        <meta-data android:name="AA_DB_VERSION" android:value="5" />
         <activity
             android:name="edu.berkeley.cs160.lasercats.MainActivity"
             android:windowSoftInputMode="adjustPan"

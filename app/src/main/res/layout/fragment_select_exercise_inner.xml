@@ -1,6 +1,7 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="edu.berkeley.cs160.lasercats.PastActivityFragments.SelectExerciseFragment"
@@ -8,9 +9,8 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:id="@+id/searchExercisesInputBox"
-        android:layout_gravity="center_horizontal|top"
         android:gravity="center"
         android:maxLines="1" />
 
@@ -19,4 +19,4 @@
         android:layout_height="466dp"
         android:id="@+id/listOfExercises"
         android:layout_gravity="center_horizontal|bottom" />
-</FrameLayout>
+</LinearLayout>

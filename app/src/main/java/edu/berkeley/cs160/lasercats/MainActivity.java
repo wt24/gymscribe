@@ -1,34 +1,28 @@
 package edu.berkeley.cs160.lasercats;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import edu.berkeley.cs160.lasercats.Models.Exercise;
+
 public class MainActivity extends BaseNavigationDrawerActivity {
 
-    String[] exercises;
+    Exercise[] fullListOfExercises;
+    Exercise[] currentlyUsedListOfExercises;
     EditText searchBar;
     ArrayAdapter currentAdapter;
     ListView exerciseList;
@@ -45,15 +39,19 @@ public class MainActivity extends BaseNavigationDrawerActivity {
         
         exerciseList = (ListView) findViewById(R.id.listView);
 
-        exercises = getResources().getStringArray(R.array.exercise_items_array);
-        currentAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.excercise_list_item, exercises);
+        List<Exercise> listOfAllExercises = Exercise.getAll();
+        fullListOfExercises = new Exercise[listOfAllExercises.size()];
+        listOfAllExercises.toArray(fullListOfExercises);
+        currentlyUsedListOfExercises = fullListOfExercises;
+
+        currentAdapter = new ArrayAdapter<Exercise>(MainActivity.this, R.layout.excercise_list_item, fullListOfExercises);
         exerciseList.setAdapter(currentAdapter);
 
         exerciseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), RecordActivity.class);
-                intent.putExtra("exercise", exercises[i]);
+                intent.putExtra("exercise", currentlyUsedListOfExercises[i].name);
                 startActivity(intent);
             }
         });
@@ -95,7 +93,7 @@ public class MainActivity extends BaseNavigationDrawerActivity {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s == null || s.toString().equals("")) {
-                    currentAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.excercise_list_item, exercises);
+                    currentAdapter = new ArrayAdapter<Exercise>(MainActivity.this, R.layout.excercise_list_item, fullListOfExercises);
                     exerciseList.setAdapter(currentAdapter);
                     return;
                 }
@@ -104,15 +102,17 @@ public class MainActivity extends BaseNavigationDrawerActivity {
 
                 Pattern regexFromUserInput = Pattern.compile(".*" + userInput + ".*", Pattern.CASE_INSENSITIVE);
                 Matcher patternMatch;
-                ArrayList<String> newNavigationItems = new ArrayList<String>();
-                for (int i = 0; i < exercises.length; i++) {
-                    exercise = exercises[i];
+                ArrayList<Exercise> newNavigationItems = new ArrayList<Exercise>();
+                for (int i = 0; i < fullListOfExercises.length; i++) {
+                    exercise = fullListOfExercises[i].name;
                     patternMatch = regexFromUserInput.matcher(exercise);
                     if(patternMatch.matches()) {
-                        newNavigationItems.add(exercise);
+                        newNavigationItems.add(fullListOfExercises[i]);
                     }
                 }
-                currentAdapter = new ArrayAdapter<String>(MainActivity.this, R.layout.excercise_list_item, newNavigationItems);
+                currentlyUsedListOfExercises = new Exercise[newNavigationItems.size()];
+                newNavigationItems.toArray(currentlyUsedListOfExercises);
+                currentAdapter = new ArrayAdapter<Exercise>(MainActivity.this, R.layout.excercise_list_item, newNavigationItems);
                 exerciseList.setAdapter(currentAdapter);
 
             }

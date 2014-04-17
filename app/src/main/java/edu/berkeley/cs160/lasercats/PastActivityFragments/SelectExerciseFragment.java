@@ -18,17 +18,20 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import edu.berkeley.cs160.lasercats.Models.Exercise;
 import edu.berkeley.cs160.lasercats.R;
 
 public class SelectExerciseFragment extends Fragment {
     private DrawerLayout mDrawerLayout;
     private ListView mExerciseList;
-    private String[] mNavigationItems;
+    private Exercise[] mNavigationItems;
+    private Exercise[] currentlyUsedList;
     private ExerciseCallbacks selectCallback;
-    private ArrayAdapter<String> currentAdapter;
+    private ArrayAdapter<Exercise> currentAdapter;
     private EditText searchBar;
 
     public SelectExerciseFragment(ExerciseCallbacks callBackClass) {
@@ -40,14 +43,17 @@ public class SelectExerciseFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_select_exercise_inner, container, false);
 
-
-        mNavigationItems = getResources().getStringArray(R.array.exercise_items_array);
+        List<Exercise> listOfAllExercises = Exercise.getAll();
+        mNavigationItems = new Exercise[listOfAllExercises.size()];
+        listOfAllExercises.toArray(mNavigationItems);
+        currentlyUsedList = mNavigationItems;
+        //mNavigationItems = getResources().getStringArray(R.array.exercise_items_array);
         mExerciseList = (ListView) rootView.findViewById(R.id.listOfExercises);
-        currentAdapter = new ArrayAdapter<String>(getActivity(), R.layout.excercise_list_item, mNavigationItems);
-        currentAdapter.sort(new Comparator<String>() {
+        currentAdapter = new ArrayAdapter<Exercise>(getActivity(), R.layout.excercise_list_item, mNavigationItems);
+        currentAdapter.sort(new Comparator<Exercise>() {
             @Override
-            public int compare(String lhs, String rhs) {
-                return lhs.compareTo(rhs);   //or whatever your sorting algorithm
+            public int compare(Exercise lhs, Exercise rhs) {
+                return lhs.name.compareTo(rhs.name);   //or whatever your sorting algorithm
             }
         });
 
@@ -65,12 +71,14 @@ public class SelectExerciseFragment extends Fragment {
             //Open Position
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(searchBar.getWindowToken(), 0);
-            selectCallback.switchToExerciseHistory(position, mNavigationItems[position]);
+            selectCallback.switchToExerciseHistory(position, currentlyUsedList[position].name);
         }
     }
 
     private void setupSearchBar(View rootView) {
         searchBar = (EditText) rootView.findViewById(R.id.searchExercisesInputBox);
+
+        searchBar.setHint("Search for an Exercise");
 
         searchBar.addTextChangedListener(new TextWatcher() {
 
@@ -81,7 +89,7 @@ public class SelectExerciseFragment extends Fragment {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s == null || s.toString().equals("")) {
-                    currentAdapter = new ArrayAdapter<String>(getActivity(), R.layout.excercise_list_item, mNavigationItems);
+                    currentAdapter = new ArrayAdapter<Exercise>(getActivity(), R.layout.excercise_list_item, mNavigationItems);
                     mExerciseList.setAdapter(currentAdapter);
                     return;
                 }
@@ -90,15 +98,17 @@ public class SelectExerciseFragment extends Fragment {
 
                 Pattern regexFromUserInput = Pattern.compile(".*" + userInput + ".*", Pattern.CASE_INSENSITIVE);
                 Matcher patternMatch;
-                ArrayList<String> newNavigationItems = new ArrayList<String>();
+                ArrayList<Exercise> newNavigationItems = new ArrayList<Exercise>();
                 for (int i = 0; i < mNavigationItems.length; i++) {
-                    exercise = mNavigationItems[i];
+                    exercise = mNavigationItems[i].name;
                     patternMatch = regexFromUserInput.matcher(exercise);
                     if(patternMatch.matches()) {
-                        newNavigationItems.add(exercise);
+                        newNavigationItems.add(mNavigationItems[i]);
                     }
                 }
-                currentAdapter = new ArrayAdapter<String>(getActivity(), R.layout.excercise_list_item, newNavigationItems);
+                currentlyUsedList = new Exercise[newNavigationItems.size()];
+                newNavigationItems.toArray(currentlyUsedList);
+                currentAdapter = new ArrayAdapter<Exercise>(getActivity(), R.layout.excercise_list_item, newNavigationItems);
                 mExerciseList.setAdapter(currentAdapter);
 
             }
