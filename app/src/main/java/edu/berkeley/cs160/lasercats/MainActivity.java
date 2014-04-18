@@ -52,6 +52,7 @@ public class MainActivity extends BaseNavigationDrawerActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), RecordActivity.class);
                 intent.putExtra("exercise", currentlyUsedListOfExercises[i].name);
+                intent.putExtra("exerciseObj", currentlyUsedListOfExercises[i]);
                 startActivity(intent);
             }
         });

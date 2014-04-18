@@ -3,8 +3,10 @@ package edu.berkeley.cs160.lasercats.Models;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * Created by stpham on 4/16/14.
@@ -28,5 +30,13 @@ public class ExerciseSet extends Model {
     public ExerciseSet(int numReps, float weight) {
         this.numReps = numReps;
         this.weight = weight;
+    }
+
+    public static List<ExerciseSet> getAllForExercise(Exercise e) {
+        return new Select()
+                .from(ExerciseSet.class)
+                .where("Exercise = ?", e.getId())
+                .orderBy("Name ASC")
+                .execute();
     }
 }

@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.berkeley.cs160.lasercats.Models.Exercise;
+import edu.berkeley.cs160.lasercats.Models.ExerciseSet;
+
 
 public class RecordActivity extends BaseNavigationDrawerActivity {
 
@@ -48,6 +51,9 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
                 "Set 5: 5.0 lbs x 12 reps",
                 "Set 6: 6.0 lbs x 110 reps"
         };
+        Exercise e = (Exercise) getIntent().getExtras().get("exerciseObj");
+        //<ExerciseSet> sets = ExerciseSet.getAllForExercise(e);
+        System.out.println("EXERCISE PRINTED OUT HERE: " + e.getClass());
 
         mListView = (ListView) findViewById(R.id.listView);
         arr = new ArrayList<String>(Arrays.asList(exercises));
