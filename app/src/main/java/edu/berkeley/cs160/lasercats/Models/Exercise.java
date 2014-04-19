@@ -37,6 +37,14 @@ public class Exercise extends Model implements Serializable{
                 .execute();
     }
 
+    public static List<Exercise> getExercise(int id) {
+        return new Select()
+                .from(Exercise.class)
+                .where("Id = ?", id)
+                .execute();
+    }
+    //TODO: getExercise for given day
+
     public String toString() {
         return name;
     }

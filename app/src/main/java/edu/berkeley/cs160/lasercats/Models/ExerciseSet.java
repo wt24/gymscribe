@@ -36,7 +36,12 @@ public class ExerciseSet extends Model {
         return new Select()
                 .from(ExerciseSet.class)
                 .where("Exercise = ?", e.getId())
-                .orderBy("Name ASC")
                 .execute();
+    }
+
+    public String toString() {
+        String s = "";
+        s += "Set " + this.getId() + ": " + weight + " lbs x " + numReps + " reps";
+        return s;
     }
 }
