@@ -1,17 +1,19 @@
 package edu.berkeley.cs160.lasercats.Models;
 
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by stpham on 4/16/14.
  */
 @Table(name = "Exercises")
-public class Exercise extends Model {
+public class Exercise extends Model implements Serializable{
 
     @Column(name = "Name")
     public String name;
@@ -34,6 +36,14 @@ public class Exercise extends Model {
                 .orderBy("Name ASC")
                 .execute();
     }
+
+    public static List<Exercise> getExercise(int id) {
+        return new Select()
+                .from(Exercise.class)
+                .where("Id = ?", id)
+                .execute();
+    }
+    //TODO: getExercise for given day
 
     public String toString() {
         return name;

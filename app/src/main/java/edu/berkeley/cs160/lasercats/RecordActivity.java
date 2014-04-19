@@ -20,8 +20,10 @@ import android.widget.ListView;
 import android.app.AlertDialog;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import edu.berkeley.cs160.lasercats.Models.Exercise;
+import edu.berkeley.cs160.lasercats.Models.ExerciseSet;
 
 
 public class RecordActivity extends BaseNavigationDrawerActivity {
@@ -38,20 +40,28 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
         mainLayoutId = R.layout.activity_record;
         super.onCreate(savedInstanceState);
         android.app.ActionBar ab = getActionBar();
-        ab.setTitle((String) getIntent().getExtras().get("exercise"));
 
-        String[] exercises = new String[]{
-                "Set 1: 4.0 lbs x 8 reps",
-                "Set 2: 5.0 lbs x 10 reps",
-                "Set 3: 2.0 lbs x 11 reps",
-                "Set 4: 4.0 lbs x 11 rep",
-                "Set 5: 5.0 lbs x 12 reps",
-                "Set 6: 6.0 lbs x 110 reps"
-        };
+        int exerciseID = Integer.valueOf(getIntent().getExtras().get("exercise").toString());
+
+        //System.out.println(">>>>>>>>>>>>>>>>>Exercise ID: " + exerciseID);
+        List<Exercise> elist = Exercise.getExercise(exerciseID);
+
+        //should be a List<Exercise> with only one object or no objects
+        Exercise e = elist.get(0);
+        //System.out.println(">>>>>>>>>>>> EXERCISE: " + e);
+        ab.setTitle(e.name);
+
+
+        List<ExerciseSet> sets = ExerciseSet.getAllForExercise(e);
+        //System.out.println(">>>>>>>>>>> FUCKING SETS BITCH: " + sets);
+        ArrayList<String> setStrings = new ArrayList<String>();
+        for (ExerciseSet set : sets) {
+            setStrings.add(set.toString());
+        }
+
 
         mListView = (ListView) findViewById(R.id.listView);
-        arr = new ArrayList<String>(Arrays.asList(exercises));
-        adapter = new ArrayAdapter<String>(this, R.layout.row, arr);
+        adapter = new ArrayAdapter<String>(this, R.layout.row, setStrings);
 
         mListView.setAdapter(adapter);
 
