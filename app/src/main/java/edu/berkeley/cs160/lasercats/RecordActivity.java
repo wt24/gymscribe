@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.app.AlertDialog;
+import android.widget.TextView;
 
 import com.activeandroid.query.Delete;
 
@@ -130,6 +131,18 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
 
         alert.show();
 
+    }
+
+    /**
+     * Function: add log that was configured in the text fields
+     * @param view
+     */
+    public void addLogButtonPressed(View view) {
+        EditText repsInput = (EditText) findViewById(R.id.repsInput);
+        EditText weightInput = (EditText) findViewById(R.id.weightInput);
+
+
+        System.out.println(">>>>>>>>>>>>>>> REPS : " + repsInput.getText() + " , WEIGHT : " + weightInput.getText());
     }
 
         //Start Editing Button

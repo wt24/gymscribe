@@ -83,6 +83,7 @@
                 android:layout_gravity="center_horizontal|bottom"
                 android:background="@drawable/roundedbutton"
                 android:text="Add to Log"
+                android:onClick="addLogButtonPressed"
                 android:textSize="8pt" />
 
         </RelativeLayout>
