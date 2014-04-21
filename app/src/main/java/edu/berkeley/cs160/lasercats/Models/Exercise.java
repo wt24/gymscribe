@@ -35,6 +35,20 @@ public class Exercise extends Model {
                 .execute();
     }
 
+    public static List<Exercise> getExerciseById(int id) {
+        return new Select()
+                .from(Exercise.class)
+                .where("Id = ?", id)
+                .execute();
+    }
+
+    public static List<Exercise> getExerciseByName(String name) {
+        return new Select()
+                .from(Exercise.class)
+                .where("Name = ?", name)
+                .execute();
+    }
+
     public String toString() {
         return name;
     }

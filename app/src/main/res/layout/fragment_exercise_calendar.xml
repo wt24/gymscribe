@@ -4,9 +4,14 @@
     android:layout_height="match_parent"
     tools:context="edu.berkeley.cs160.lasercats.PastActivityFragments.ExerciseCalendarFragment">
 
-    <edu.berkeley.cs160.lasercats.PastActivityFragments.extendedcalendarview.ExtendedCalendarView
-        android:id="@+id/calendar"
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:id="@+id/child" >
+    </FrameLayout>
+
+
+
 
 </FrameLayout>

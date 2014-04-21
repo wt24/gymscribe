@@ -36,6 +36,12 @@
         <provider
             android:name="edu.berkeley.cs160.lasercats.PastActivityFragments.extendedcalendarview.CalendarProvider"
             android:authorities="com.tyczj.extendedcalendarview.calendarprovider" />
+
+
+        <provider
+            android:name="com.tyczj.extendedcalendarview.CalendarProvider"
+            android:permission="signature"
+            android:authorities="com.tyczj.extendedcalendarview.calendarprovider" />
     </application>
 
 </manifest>

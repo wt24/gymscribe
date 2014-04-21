@@ -3,6 +3,7 @@ package edu.berkeley.cs160.lasercats.Models;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.sql.Date;
@@ -30,6 +31,22 @@ public class ExerciseSet extends Model {
     public ExerciseSet(int numReps, float weight) {
         this.numReps = numReps;
         this.weight = weight;
+    }
+
+    public static List<ExerciseSet> getAllForExerciseSortedByDate(String e) {
+        Exercise exercise = Exercise.getExerciseByName(e).get(0);
+        return new Select()
+                .from(ExerciseSet.class)
+                .where("Exercise = ?", exercise.getId())
+                .orderBy("DateOfSet DESC")
+                .execute();
+    }
+
+    public static List<ExerciseSet> getAllForExercise(Exercise e) {
+        return new Select()
+                .from(ExerciseSet.class)
+                .where("Exercise = ?", e.getId())
+                .execute();
     }
 
     public String toString() {
@@ -66,6 +83,7 @@ public class ExerciseSet extends Model {
                 .from(ExerciseSet.class)
                 .where("Exercise = ?", e.getId())
                 .where("DateOfSet >= ? AND DateOfSet <= ?", startDate.getTime(), endDate.getTime())
+                .orderBy("DateOfSet ASC")
                 .execute();
     }
 
@@ -117,5 +135,9 @@ public class ExerciseSet extends Model {
         Date enDate = new Date(dateInMilliseconds - secondsMinutesHoursIntoDate + 86399000); // 23:59:59
         Date[] result = {startDate, enDate};
         return result;
+    }
+
+    public static void eraseTable() {
+        new Delete().from(ExerciseSet.class).execute();
     }
 }
