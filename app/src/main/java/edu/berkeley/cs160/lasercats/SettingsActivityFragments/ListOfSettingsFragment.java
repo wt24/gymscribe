@@ -56,7 +56,14 @@ public class ListOfSettingsFragment extends PreferenceFragment implements Prefer
         String key = preference.getKey();
         // do what ever you want with this key
         if (key.equals("pref_gen_sample_data")) {
-            generateSampleData();
+            Thread thread = new Thread()
+            {
+                @Override
+                public void run() {
+                    generateSampleData();
+                }
+            };
+            thread.start();
         } else if (key.equals("pref_clear_sets_db")) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
             alertDialog.setMessage("Erase Sets?");

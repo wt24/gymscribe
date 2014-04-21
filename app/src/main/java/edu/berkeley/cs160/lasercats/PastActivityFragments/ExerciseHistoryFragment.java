@@ -106,7 +106,7 @@ public class ExerciseHistoryFragment extends Fragment {
         mRenderer.setLabelsTextSize(16);
         mRenderer.setPointSize(5);
 
-        mCurrentSeries = new XYSeries("Average Weight");
+        mCurrentSeries = new XYSeries("Max Weight");
         mDataset.addSeries(mCurrentSeries);
         mCurrentRenderer = new XYSeriesRenderer();
 
