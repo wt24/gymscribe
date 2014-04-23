@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.app.AlertDialog;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.activeandroid.query.Delete;
@@ -34,6 +35,11 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
     private ArrayList<String> setStrings;
     private int exerciseID;
     private Exercise exercise;
+    private Button mAddToLogBtn;
+    private EditText mRepsInput;
+    private EditText mWeightInput;
+    private Button mInputToggleBtn;
+    private RelativeLayout mInputSetForm;
 
 
     @Override
@@ -41,22 +47,69 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
         mainLayoutId = R.layout.activity_record;
         super.onCreate(savedInstanceState);
 
+
         exerciseID = Integer.valueOf(getIntent().getExtras().get("exercise").toString());
         exercise = Exercise.getExercise(exerciseID).get(0);
 
+        // setting actionbar to Name
         android.app.ActionBar ab = getActionBar();
         ab.setTitle(exercise.name);
 
+        mInputSetForm = (RelativeLayout) findViewById(R.id.manualInputSetForm);
+        mInputSetForm.setVisibility(View.GONE);
+
+        mInputToggleBtn = (Button) findViewById(R.id.manualInputToggle);
+        mInputToggleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               toggleManualInputForm();
+            }
+        });
+
+        mAddToLogBtn = (Button) findViewById(R.id.addToLog);
+        mRepsInput = (EditText) findViewById(R.id.repsInput);
+        mWeightInput = (EditText) findViewById(R.id.weightInput);
+
+        mAddToLogBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String repsInput = mRepsInput.getText().toString().trim();
+                String weightInput = mWeightInput.getText().toString().trim();
+                if (repsInput.equals("") || weightInput.equals("")) {
+                    AlertDialog.Builder invalid = new AlertDialog.Builder(RecordActivity.this)
+                            .setTitle("Invalid submission")
+                            .setMessage("Please enter a number into Reps and Weights")
+                            .setPositiveButton("OK", null);
+                    invalid.show();
+                } else {
+                    addSet(Integer.parseInt(repsInput), Float.parseFloat(weightInput));
+                }
+            }
+        });
+
         loadSets();
+    }
+
+    /**
+     * Function: Toggles visibility of manual input form
+     */
+    protected void toggleManualInputForm() {
+        if (mInputSetForm.getVisibility() == View.VISIBLE) {
+            mInputSetForm.setVisibility(View.GONE);
+        } else {
+            mInputSetForm.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
      * Function: Load sets from database for current exercise
      */
     protected void loadSets() {
+        // getting all exercises
         sets = new ArrayList<ExerciseSet>(ExerciseSet.getAllForExercise(exercise));
         System.out.println(">>>>>>>>>>>>>>> SETS: " + sets);
 
+        // just converting it to Strings
         setStrings = new ArrayList<String>();
         for (ExerciseSet set : sets) {
             setStrings.add(set.toString());
@@ -85,6 +138,8 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
         set.dateOfSet = new java.sql.Date(new Date().getTime());
         set.save();
         loadSets();
+        mRepsInput.setText("");
+        mWeightInput.setText("");
     }
 
     /**
@@ -118,7 +173,6 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
                 ExerciseSet e = sets.get(deletePosition);
                 deleteSet(Integer.valueOf(e.getId().toString()));
                 loadSets();
-
             }
         });
         alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {

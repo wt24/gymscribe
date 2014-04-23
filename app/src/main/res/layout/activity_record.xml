@@ -6,10 +6,10 @@
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/darkbluenice"
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
@@ -17,15 +17,10 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
-
         <RelativeLayout
-            android:id="@+id/relativeLayout"
+            android:id="@+id/manualInputSetForm"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/historyButton"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:background="@drawable/rounded_bg"
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -38,8 +33,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/repsInput"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
+                android:layout_alignLeft="@+id/repsInput"
+                android:layout_alignStart="@+id/repsInput"
                 android:text="Reps" />
 
             <TextView
@@ -47,7 +42,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/weightInput"
-                android:layout_alignParentTop="true"
                 android:layout_alignStart="@+id/weightInput"
                 android:layout_gravity="right|top"
                 android:text="Weight" />
@@ -57,9 +51,6 @@
                 android:layout_width="174dp"
                 android:layout_height="35dp"
                 android:layout_alignBottom="@+id/weightInput"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/weightInput"
                 android:layout_gravity="left|center_vertical"
                 android:ems="20"
                 android:inputType="number" />
@@ -78,40 +69,63 @@
                 android:id="@+id/addToLog"
                 android:layout_width="150dp"
                 android:layout_height="34dp"
-                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal|bottom"
+                android:layout_below="@+id/weightInput"
                 android:background="@drawable/roundedbutton"
+                android:layout_marginTop="20px"
                 android:text="Add to Log"
                 android:onClick="addLogButtonPressed"
                 android:textSize="8pt" />
 
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/historyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="75px"
-            android:layout_above="@+id/listView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10px"
-            android:layout_marginTop="10px"
-            android:background="@drawable/roundedbutton"
-            android:text="History"
-            android:textSize="8pt" />
 
-        <Button
-            android:id="@+id/editButton"
-            android:layout_width="wrap_content"
-            android:layout_height="75px"
-            android:layout_alignEnd="@+id/relativeLayout"
-            android:layout_alignRight="@+id/relativeLayout"
-            android:layout_below="@+id/relativeLayout"
-            android:layout_marginBottom="10px"
-            android:layout_marginTop="10px"
-            android:background="@drawable/roundedbutton"
-            android:text="Edit"
-            android:textSize="8pt" />
+        <RelativeLayout
+            android:id="@+id/buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/darkbluenice"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
+
+            <Button
+                android:id="@+id/manualInputToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="75px"
+                android:background="@drawable/roundedbutton"
+                android:text=" Log a set "
+                android:layout_marginBottom="10px"
+                android:layout_marginTop="10px"
+                android:layout_alignParentLeft="true"
+                android:textSize="8pt" />
+
+            <Button
+                android:id="@+id/historyButton"
+                android:layout_width="wrap_content"
+                android:layout_height="75px"
+                android:layout_marginBottom="10px"
+                android:layout_marginTop="10px"
+                android:layout_centerInParent="true"
+                android:background="@drawable/roundedbutton"
+                android:text="History"
+                android:textSize="8pt" />
+
+            <Button
+                android:id="@+id/editButton"
+                android:layout_width="wrap_content"
+                android:layout_height="75px"
+                android:layout_marginBottom="10px"
+                android:layout_marginTop="10px"
+                android:background="@drawable/roundedbutton"
+                android:text="Edit"
+                android:layout_alignParentRight="true"
+                android:textSize="8pt" />
+
+        </RelativeLayout>
 
 
         <ListView
@@ -139,7 +153,7 @@
             android:textColor="@color/closeyoureyes"
             android:textSize="8pt" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <!-- android:layout_gravity="start" tells DrawerLayout to treat
          this as a sliding drawer on the left side for left-to-right
