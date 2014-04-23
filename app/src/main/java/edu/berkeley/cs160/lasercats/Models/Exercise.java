@@ -5,13 +5,14 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by stpham on 4/16/14.
  */
 @Table(name = "Exercises")
-public class Exercise extends Model {
+public class Exercise extends Model implements Serializable{
 
     @Column(name = "Name")
     public String name;
@@ -49,7 +50,11 @@ public class Exercise extends Model {
                 .execute();
     }
 
+
     public String toString() {
         return name;
     }
+
+    //TODO: getExercise for given day
+
 }
