@@ -8,6 +8,8 @@ import com.activeandroid.query.Select;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import com.activeandroid.query.Select;
+
 import java.util.List;
 
 /**
@@ -41,6 +43,7 @@ public class ExerciseSet extends Model {
                 .orderBy("DateOfSet DESC")
                 .execute();
     }
+
 
     public static List<ExerciseSet> getAllForExercise(Exercise e) {
         return new Select()

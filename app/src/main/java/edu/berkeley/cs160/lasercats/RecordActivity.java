@@ -1,27 +1,27 @@
 package edu.berkeley.cs160.lasercats;
 
-import android.app.LauncherActivity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.CountDownTimer;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.app.AlertDialog;
+import android.widget.TextView;
+
+import com.activeandroid.query.Delete;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+
+import edu.berkeley.cs160.lasercats.Models.Exercise;
+import edu.berkeley.cs160.lasercats.Models.ExerciseSet;
 
 
 public class RecordActivity extends BaseNavigationDrawerActivity {
@@ -30,31 +30,41 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
     private Button mEditButton;
     private ListView mListView;
     private ArrayAdapter<String> adapter;
-    List<String> arr;
+    private ArrayList<ExerciseSet> sets;
+    private ArrayList<String> setStrings;
+    private int exerciseID;
+    private Exercise exercise;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mainLayoutId = R.layout.activity_record;
         super.onCreate(savedInstanceState);
-        android.app.ActionBar ab = getActionBar();
-        ab.setTitle((String) getIntent().getExtras().get("exercise"));
 
-        String[] exercises = new String[]{
-                "Set 1: 4.0 lbs x 8 reps",
-                "Set 2: 5.0 lbs x 10 reps",
-                "Set 3: 2.0 lbs x 11 reps",
-                "Set 4: 4.0 lbs x 11 rep",
-                "Set 5: 5.0 lbs x 12 reps",
-                "Set 6: 6.0 lbs x 110 reps"
-        };
+        exerciseID = Integer.valueOf(getIntent().getExtras().get("exercise").toString());
+        exercise = Exercise.getExerciseById(exerciseID).get(0);
+
+        android.app.ActionBar ab = getActionBar();
+        ab.setTitle(exercise.name);
+
+        loadSets();
+    }
+
+    /**
+     * Function: Load sets from database for current exercise
+     */
+    protected void loadSets() {
+        sets = new ArrayList<ExerciseSet>(ExerciseSet.getAllForExercise(exercise));
+        System.out.println(">>>>>>>>>>>>>>> SETS: " + sets);
+
+        setStrings = new ArrayList<String>();
+        for (ExerciseSet set : sets) {
+            setStrings.add(set.toString());
+        }
 
         mListView = (ListView) findViewById(R.id.listView);
-        arr = new ArrayList<String>(Arrays.asList(exercises));
-        adapter = new ArrayAdapter<String>(this, R.layout.row, arr);
-
+        adapter = new ArrayAdapter<String>(this, R.layout.row, setStrings);
         mListView.setAdapter(adapter);
-
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -64,6 +74,34 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
         });
     }
 
+    /**
+     * Function: add new set to database
+     * @param reps
+     * @param weight
+     */
+    protected void addSet(int reps, float weight) {
+        ExerciseSet set = new ExerciseSet(reps, weight);
+        set.exercise = exercise;
+        set.dateOfSet = new java.sql.Date(new Date().getTime());
+        set.save();
+        loadSets();
+    }
+
+    /**
+     * Function: delete set from database
+     * @param setID
+     */
+    protected void deleteSet(int setID) {
+        new Delete()
+                .from(ExerciseSet.class)
+                .where("Id = ?", setID)
+                .execute();
+    }
+
+    /**
+     * Function: delete selected log from list & database
+     * @param i
+     */
     protected void removeItemFromList(int i) {
         final int deletePosition = i;
         AlertDialog.Builder alert = new AlertDialog.Builder(
@@ -77,9 +115,9 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
                 // TODO Auto-generated method stub
 
                 // main code on after clicking yes
-                arr.remove(deletePosition);
-                adapter.notifyDataSetChanged();
-                adapter.notifyDataSetInvalidated();
+                ExerciseSet e = sets.get(deletePosition);
+                deleteSet(Integer.valueOf(e.getId().toString()));
+                loadSets();
 
             }
         });
@@ -95,26 +133,17 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
 
     }
 
-    public void wizardAdd() {
-        new CountDownTimer(5000,1000) {
-            public void onTick(long millisUntilFinished) {
-                //do nothing
-            }
-            public void onFinish() {
-                RecordActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        arr.add("Set 7: 150.0 lbs x 8000 reps");
-                        adapter.notifyDataSetChanged();
-                        adapter.notifyDataSetInvalidated();
-                    }
-                });
-            }
-        }.start();
+    /**
+     * Function: add log that was configured in the text fields
+     * @param view
+     */
+    public void addLogButtonPressed(View view) {
+        EditText repsInput = (EditText) findViewById(R.id.repsInput);
+        EditText weightInput = (EditText) findViewById(R.id.weightInput);
 
 
+        System.out.println(">>>>>>>>>>>>>>> REPS : " + repsInput.getText() + " , WEIGHT : " + weightInput.getText());
     }
-
 
         //Start Editing Button
     /*
@@ -126,9 +155,6 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
             }
         });
     */
-
-
-
 
 
     @Override
@@ -158,7 +184,9 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
         if (isRecording) {
             b.setText("Stop");
             b.setBackground(getResources().getDrawable(R.drawable.cancel_button_style));
-            wizardAdd();
+            //DO STUFF HERE
+            addSet(1000,4000);
+            loadSets();
         }
         else {
             b.setText("Record");
