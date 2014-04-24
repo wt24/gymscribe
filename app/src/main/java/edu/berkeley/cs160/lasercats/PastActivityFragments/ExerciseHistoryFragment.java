@@ -3,24 +3,30 @@ package edu.berkeley.cs160.lasercats.PastActivityFragments;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
+import org.achartengine.chart.PointStyle;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import edu.berkeley.cs160.lasercats.Models.Exercise;
+import edu.berkeley.cs160.lasercats.Models.ExerciseSet;
 import edu.berkeley.cs160.lasercats.R;
 
 public class ExerciseHistoryFragment extends Fragment {
@@ -73,8 +79,8 @@ public class ExerciseHistoryFragment extends Fragment {
         LinearLayout layout = (LinearLayout) getView().findViewById(R.id.chartView);
         if (mChart == null) {
             initChart();
-            addSampleData();
-            mChart = ChartFactory.getCubeLineChartView(getActivity(), mDataset, mRenderer, 0.3f);
+            populateSeriesData();
+            mChart = ChartFactory.getTimeChartView(getActivity(), mDataset, mRenderer, "MM DD YY");
             layout.addView(mChart);
         } else {
             mChart.repaint();
@@ -86,20 +92,79 @@ public class ExerciseHistoryFragment extends Fragment {
         mRenderer.setBackgroundColor(Color.TRANSPARENT);
         mRenderer.setMarginsColor(Color.argb(0x00, 0xff, 0x00, 0x00));
 
-        mCurrentSeries = new XYSeries("Average Weight");
+        mRenderer.setAxesColor(Color.BLACK);
+
+        mRenderer.setAxisTitleTextSize(16);
+        mRenderer.setXTitle("Date");
+        mRenderer.setXLabelsAngle(-45f);
+        mRenderer.setYTitle("Max Weight");
+        mRenderer.setXLabelsColor(Color.BLACK);
+        mRenderer.setYLabelsColor(0, Color.BLACK);
+        mRenderer.setZoomInLimitX(24l * 3600000l);
+        mRenderer.setShowGridX(true);
+        mRenderer.setShowGridY(true);
+        mRenderer.setLabelsTextSize(16);
+        mRenderer.setPointSize(5);
+
+        mCurrentSeries = new XYSeries("Max Weight");
         mDataset.addSeries(mCurrentSeries);
         mCurrentRenderer = new XYSeriesRenderer();
+
+        mCurrentRenderer.setFillPoints(true);
+        mCurrentRenderer.setPointStyle(PointStyle.CIRCLE);
+
         mRenderer.addSeriesRenderer(mCurrentRenderer);
     }
 
-    private void addSampleData() {
-        mCurrentSeries.add(1, 2);
-        mCurrentSeries.add(2, 3);
-        mCurrentSeries.add(3, 2);
-        mCurrentSeries.add(4, 5);
-        mCurrentSeries.add(5, 4);
-        mCurrentSeries.add(6, 4);
-        mCurrentSeries.add(7, 4);
-        mCurrentSeries.add(8, 4);
+    private int getDiffInDays(Date d1, Date d2) {
+        Long diffInMilliSeconds = Math.abs(d2.getTime() - d1.getTime());
+        Long diffInDays = diffInMilliSeconds / (24l * 3600000l);
+        return Integer.parseInt("" + diffInDays, 10);
+    }
+
+    private void populateSeriesData() {
+        //Java Util's Date Instantiates to the time it was created
+        java.util.Date dateNow = new java.util.Date();
+        Date[] sqlStartEndOfToday = ExerciseSet.startEndOfDate(new Date(dateNow.getTime()));
+        Date sqlSixtyDaysAgo = new Date(sqlStartEndOfToday[1].getTime() - (60l * 24l * 3600000l));
+        Date[] sqlStartEndOfSixtyDaysAgo = ExerciseSet.startEndOfDate(new Date(sqlSixtyDaysAgo.getTime()));
+        java.util.Date dateNowMinusSixtyDays = new java.util.Date(sqlStartEndOfSixtyDaysAgo[0].getTime());
+
+        Exercise exerciseObj = Exercise.getExerciseByName(exerciseName).get(0);
+        //Get Last 60 Days Only
+        List<ExerciseSet> exerciseSets = ExerciseSet.getAllByExerciseAndRangeOfDate(exerciseObj,
+                sqlStartEndOfSixtyDaysAgo[0],
+                sqlStartEndOfToday[1]);
+
+        HashMap<Date, ArrayList<ExerciseSet>> bucketOfSetsByDate = new HashMap<Date, ArrayList<ExerciseSet>>();
+        for (Iterator<ExerciseSet> iter = exerciseSets.iterator(); iter.hasNext(); ) {
+            ExerciseSet currentSet = iter.next();
+            Date[] sqlStartEndOfCurrentSet = ExerciseSet.startEndOfDate(currentSet.dateOfSet);
+            if(!bucketOfSetsByDate.containsKey(sqlStartEndOfCurrentSet[0])) {
+                ArrayList<ExerciseSet> tempArrayList = new ArrayList<ExerciseSet>();
+                bucketOfSetsByDate.put(sqlStartEndOfCurrentSet[0], tempArrayList);
+            }
+            bucketOfSetsByDate.get(sqlStartEndOfCurrentSet[0]).add(currentSet);
+        }
+
+        float globalMin = 100000000f;
+        for(int i = 0; i < 60; i++) {
+            Date currentDate = new Date(sqlStartEndOfSixtyDaysAgo[0].getTime() + (i * 24l * 3600000l));
+            if(bucketOfSetsByDate.containsKey(currentDate)) {
+                float maxWeightForDate = 0;
+                ArrayList<ExerciseSet> listForDate = bucketOfSetsByDate.get(currentDate);
+                for (Iterator<ExerciseSet> iter = listForDate.iterator(); iter.hasNext(); ) {
+                    ExerciseSet currentSet = iter.next();
+                    maxWeightForDate = Math.max(currentSet.weight, maxWeightForDate);
+                }
+                mCurrentSeries.add(currentDate.getTime(), maxWeightForDate);
+                // Add Custom Label
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy");
+                mRenderer.addXTextLabel(currentDate.getTime(), dateFormat.format(currentDate));
+                globalMin = Math.min(globalMin, maxWeightForDate);
+            }
+        }
+        mRenderer.setYAxisMin(globalMin - 10);
+        mRenderer.setXAxisMin(sqlStartEndOfSixtyDaysAgo[0].getTime());
     }
 }

@@ -1,6 +1,5 @@
 package edu.berkeley.cs160.lasercats.Models;
 
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -37,15 +36,25 @@ public class Exercise extends Model implements Serializable{
                 .execute();
     }
 
-    public static List<Exercise> getExercise(int id) {
+    public static List<Exercise> getExerciseById(int id) {
         return new Select()
                 .from(Exercise.class)
                 .where("Id = ?", id)
                 .execute();
     }
-    //TODO: getExercise for given day
+
+    public static List<Exercise> getExerciseByName(String name) {
+        return new Select()
+                .from(Exercise.class)
+                .where("Name = ?", name)
+                .execute();
+    }
+
 
     public String toString() {
         return name;
     }
+
+    //TODO: getExercise for given day
+
 }

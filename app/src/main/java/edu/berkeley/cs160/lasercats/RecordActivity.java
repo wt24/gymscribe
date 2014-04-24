@@ -49,7 +49,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
 
 
         exerciseID = Integer.valueOf(getIntent().getExtras().get("exercise").toString());
-        exercise = Exercise.getExercise(exerciseID).get(0);
+        exercise = Exercise.getExerciseById(exerciseID).get(0);
 
         // setting actionbar to Name
         android.app.ActionBar ab = getActionBar();

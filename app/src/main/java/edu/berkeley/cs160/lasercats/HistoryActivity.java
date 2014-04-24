@@ -67,7 +67,7 @@ public class HistoryActivity extends BaseNavigationDrawerActivity implements Exe
     }
 
     public void switchToCalendarFor(String exercise) {
-        Fragment fragment = new ExerciseCalendarFragment(exercise);
+        ExerciseCalendarFragment fragment = new ExerciseCalendarFragment(exercise);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
     }

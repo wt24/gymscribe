@@ -2,7 +2,7 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.1"
+    buildToolsVersion '19.0.3'
 
     defaultConfig {
         minSdkVersion 13
@@ -22,6 +22,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:+'
     compile files('libs/TarsosDSP-1.7-bin.jar')
     compile files('libs/achartengine-1.1.0.jar')
-    compile files('libs/activeandroid-3.1-beta.jar')
     compile files('libs/ActiveAndroid.jar')
+    compile files('libs/date4j.jar')
+    compile project(':Calendroid')
+    compile 'com.android.support:support-v13:+'
 }

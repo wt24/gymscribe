@@ -59,5 +59,7 @@
     <string name="saturday">SAT</string>
     <string name="sunday">SUN</string>
 
+    <string name="sample_data">Data</string>
+
 
 </resources>
