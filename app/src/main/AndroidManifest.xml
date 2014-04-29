@@ -44,4 +44,6 @@
             android:authorities="com.tyczj.extendedcalendarview.calendarprovider" />
     </application>
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
 </manifest>
