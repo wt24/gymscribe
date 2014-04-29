@@ -25,7 +25,7 @@ import edu.berkeley.cs160.lasercats.Models.Exercise;
 import edu.berkeley.cs160.lasercats.Models.ExerciseSet;
 
 
-public class RecordActivity extends BaseNavigationDrawerActivity {
+public class RecordActivity extends BaseNavigationDrawerActivity implements ContinuousRecognizer.ContinuousRecognizerCallback {
 
     private boolean isRecording = false;
     private Button mEditButton;
@@ -40,7 +40,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
     private EditText mWeightInput;
     private Button mInputToggleBtn;
     private RelativeLayout mInputSetForm;
-
+    private ContinuousRecognizer mContinuousRecognizer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,9 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
         // setting actionbar to Name
         android.app.ActionBar ab = getActionBar();
         ab.setTitle(exercise.name);
+
+        mContinuousRecognizer = new ContinuousRecognizer(getApplicationContext());
+        mContinuousRecognizer.setContinuousRecognizerCallback(this);
 
         mInputSetForm = (RelativeLayout) findViewById(R.id.manualInputSetForm);
         mInputSetForm.setVisibility(View.GONE);
@@ -239,13 +242,51 @@ public class RecordActivity extends BaseNavigationDrawerActivity {
             b.setText("Stop");
             b.setBackground(getResources().getDrawable(R.drawable.cancel_button_style));
             //DO STUFF HERE
-            addSet(1000,4000);
+            //addSet(1000,4000);
             loadSets();
+            mContinuousRecognizer.startListening();
         }
         else {
             b.setText("Record");
             b.setBackground(getResources().getDrawable(R.drawable.record_button_style));
+            mContinuousRecognizer.stopListening();
         }
     }
 
+    @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onResult(String result) {
+        String [] words = result.split(" ");
+        boolean recordSet = false;
+        int reps = 0;
+        float weight = 0;
+
+        for(int i = 0; i < words.length; i++) {
+            if(words[i].equals("record")) {
+                recordSet = true;
+            }
+            if(recordSet) {
+                if(words[i].equals("reps") && i > 0) {
+                    try {
+                        reps = Integer.parseInt(words[i-1]);
+                    } catch(NumberFormatException e) {
+                        // handle invalid input
+                    }
+                }
+                else if(words[i].equals("pounds") && i > 0) {
+                    try {
+                        weight = Float.parseFloat(words[i-1]);
+                    } catch(NumberFormatException e) {
+                        // handle invalid input
+                    }
+                }
+            }
+        }
+        System.out.println(result);
+        addSet(reps, weight);
+    }
 }
