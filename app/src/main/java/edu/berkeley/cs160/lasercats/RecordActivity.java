@@ -254,14 +254,11 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
     }
 
     @Override
-    public void onPause() {
-
-    }
-
-    @Override
     public void onResult(String result) {
         String [] words = result.split(" ");
         boolean recordSet = false;
+        boolean isReps = false;
+        boolean isWeight = false;
         int reps = 0;
         float weight = 0;
 
@@ -273,20 +270,25 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
                 if(words[i].equals("reps") && i > 0) {
                     try {
                         reps = Integer.parseInt(words[i-1]);
+                        isReps = true;
                     } catch(NumberFormatException e) {
                         // handle invalid input
+                        isReps = false;
                     }
                 }
                 else if(words[i].equals("pounds") && i > 0) {
                     try {
                         weight = Float.parseFloat(words[i-1]);
+                        isReps = true;
                     } catch(NumberFormatException e) {
                         // handle invalid input
+                        isReps = false;
                     }
                 }
             }
         }
-        System.out.println(result);
-        addSet(reps, weight);
+        if(recordSet && isReps && isWeight) {
+            addSet(reps, weight);
+        }
     }
 }
