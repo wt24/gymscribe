@@ -15,20 +15,23 @@ import android.widget.ListView;
 import android.app.AlertDialog;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import android.util.Log;
+import android.speech.tts.TextToSpeech;
 import com.activeandroid.query.Delete;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import edu.berkeley.cs160.lasercats.Models.Exercise;
 import edu.berkeley.cs160.lasercats.Models.ExerciseSet;
 
 
-public class RecordActivity extends BaseNavigationDrawerActivity implements ContinuousRecognizer.ContinuousRecognizerCallback {
+public class RecordActivity extends BaseNavigationDrawerActivity implements ContinuousRecognizer.ContinuousRecognizerCallback, TextToSpeech.OnInitListener {
 
     private boolean isRecording = false;
+    private TextToSpeech tts;
     private Button mEditButton;
     private ListView mListView;
     private ArrayAdapter<String> adapter;
@@ -49,6 +52,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         mainLayoutId = R.layout.activity_record;
         super.onCreate(savedInstanceState);
 
+        tts = new TextToSpeech(this, this);
 
         exerciseID = Integer.valueOf(getIntent().getExtras().get("exercise").toString());
         exercise = Exercise.getExerciseById(exerciseID).get(0);
@@ -303,6 +307,36 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         }
         if(recordSet && isReps && isWeight) {
             addSet(reps, weight);
+            speak("recorded " + reps + " reps of " + weight + " pounds");
+        } else {
+            speak("please try again");
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        if(tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void onInit(int status) {
+        if (status == TextToSpeech.SUCCESS) {
+            int result = tts.setLanguage(Locale.US);
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "This Language is not supported");
+            } else {
+                Log.e("TTS", "Initialization successful");
+            }
+        } else {
+            Log.e("TTS", "Initilization Failed!");
+        }
+    }
+
+    private void speak(String text) {
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 }
