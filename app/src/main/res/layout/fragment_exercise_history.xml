@@ -20,8 +20,7 @@
             android:layout_height="wrap_content"
             android:text="Back"
             android:id="@+id/backBtn"
-            android:layout_weight=".5"
-            android:background="@drawable/history_roundedbutton"
+            android:layout_weight="0.50"
             android:layout_gravity="left|top" />
 
         <Button
@@ -29,8 +28,7 @@
             android:layout_height="wrap_content"
             android:text="Calendar"
             android:id="@+id/calBtn"
-            android:layout_weight=".5"
-            android:background="@drawable/history_roundedbutton"
+            android:layout_weight="0.50"
             android:layout_gravity="right|top" />
 
     </LinearLayout>

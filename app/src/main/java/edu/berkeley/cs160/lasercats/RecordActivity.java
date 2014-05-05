@@ -1,6 +1,7 @@
 package edu.berkeley.cs160.lasercats;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.view.Menu;
@@ -39,6 +40,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
     private EditText mRepsInput;
     private EditText mWeightInput;
     private Button mInputToggleBtn;
+    private Button mHistoryBtn;
     private RelativeLayout mInputSetForm;
     private ContinuousRecognizer mContinuousRecognizer;
 
@@ -70,6 +72,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         });
 
         mAddToLogBtn = (Button) findViewById(R.id.addToLog);
+        mHistoryBtn = (Button) findViewById(R.id.historyButton);
         mRepsInput = (EditText) findViewById(R.id.repsInput);
         mWeightInput = (EditText) findViewById(R.id.weightInput);
 
@@ -90,7 +93,18 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
             }
         });
 
+        mHistoryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToHistory();
+            }
+        });
+
         loadSets();
+    }
+
+    private void switchToHistory() {
+        selectItem(1);
     }
 
     /**
@@ -119,7 +133,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         }
 
         mListView = (ListView) findViewById(R.id.listView);
-        adapter = new ArrayAdapter<String>(this, R.layout.row, setStrings);
+        adapter = new ArrayAdapter<String>(this, R.layout.excercise_list_item, setStrings);
         mListView.setAdapter(adapter);
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
