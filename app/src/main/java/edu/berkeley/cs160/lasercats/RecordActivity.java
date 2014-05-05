@@ -255,7 +255,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
 
     @Override
     public void onPause() {
-
+        super.onPause();
     }
 
     @Override
