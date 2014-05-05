@@ -70,7 +70,11 @@ public class ContinuousRecognizer implements RecognitionListener {
     @Override
     public void onError(int arg0) {
         Log.d(TAG, "onError");
+        
         Log.d(TAG, "error: " + String.valueOf(arg0));
+        if (arg0 == 7) {
+            startListening();
+        }
     }
 
     @Override
