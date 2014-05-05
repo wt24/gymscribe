@@ -1,8 +1,12 @@
 package edu.berkeley.cs160.lasercats;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.CountDownTimer;
+import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,21 +15,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.app.AlertDialog;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.activeandroid.query.Delete;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import edu.berkeley.cs160.lasercats.Models.Exercise;
 import edu.berkeley.cs160.lasercats.Models.ExerciseSet;
 
 
-public class RecordActivity extends BaseNavigationDrawerActivity implements ContinuousRecognizer.ContinuousRecognizerCallback {
+public class RecordActivity extends BaseNavigationDrawerActivity implements ContinuousRecognizer.ContinuousRecognizerCallback, OnInitListener {
 
     private boolean isRecording = false;
     private Button mEditButton;
@@ -41,6 +45,9 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
     private Button mInputToggleBtn;
     private RelativeLayout mInputSetForm;
     private ContinuousRecognizer mContinuousRecognizer;
+    // TTS stuff
+    private int MY_DATA_CHECK_CODE = 0;
+    private TextToSpeech myTTS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +98,13 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         });
 
         loadSets();
+
+        // So upon creating your activity, a good first step is to check for the presence of
+        // the TTS resources with the corresponding intent:
+        Intent checkTTSIntent = new Intent();
+        checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+        startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
+
     }
 
     /**
@@ -253,42 +267,103 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         }
     }
 
+    /* Checks if the user needs to install package for TTS */
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == MY_DATA_CHECK_CODE) {
+            if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
+                myTTS = new TextToSpeech(this, this);
+            }
+            else {
+                Intent installTTSIntent = new Intent();
+                installTTSIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+                startActivity(installTTSIntent);
+            }
+        }
+    }
+
+    public void speakWords(String speech) {
+        //speak straight away
+        myTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+    //setup TTS
+    public void onInit(int initStatus) {
+        //check for successful instantiation
+        if (initStatus == TextToSpeech.SUCCESS) {
+            if(myTTS.isLanguageAvailable(Locale.US)==TextToSpeech.LANG_AVAILABLE)
+                myTTS.setLanguage(Locale.US);
+        }
+        else if (initStatus == TextToSpeech.ERROR) {
+            Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();
+        }
+    }
+
     @Override
     public void onResult(String result) {
+        Log.e("RESULT", result);
         String [] words = result.split(" ");
         boolean recordSet = false;
         boolean isReps = false;
         boolean isWeight = false;
         int reps = 0;
         float weight = 0;
+        if (words[0].equals("record")) {
+            recordSet = true;
+        } else {
+            Log.e("not working", words[0]);
+        }
 
-        for(int i = 0; i < words.length; i++) {
-            if(words[i].equals("record")) {
-                recordSet = true;
-            }
-            if(recordSet) {
-                if(words[i].equals("reps") && i > 0) {
-                    try {
-                        reps = Integer.parseInt(words[i-1]);
-                        isReps = true;
-                    } catch(NumberFormatException e) {
-                        // handle invalid input
-                        isReps = false;
-                    }
-                }
-                else if(words[i].equals("pounds") && i > 0) {
-                    try {
-                        weight = Float.parseFloat(words[i-1]);
-                        isReps = true;
-                    } catch(NumberFormatException e) {
-                        // handle invalid input
-                        isReps = false;
-                    }
+        if (recordSet) {
+            mContinuousRecognizer.stopListening();
+            List<String> numbers = new ArrayList<String>();
+            for (int i=0; i< words.length; i++) {
+                if (words[i].matches("[0-9]+")) { // matches uses regex
+                    Log.e("Match", words[i]);
+                    numbers.add(words[i]);
                 }
             }
+            if (numbers.size() >= 2) {
+                mContinuousRecognizer.stopListening();
+                addSet(Integer.parseInt(numbers.get(0)), Integer.parseInt(numbers.get(1)));
+                String correctText = "Did you say " + numbers.get(0) + " sets of " +  numbers.get(1) + "?";
+                Log.e("saying", correctText);
+                speakWords(correctText);
+                mContinuousRecognizer.startListening();
+            } else {
+                mContinuousRecognizer.stopListening();
+                String wrongText = "Sorry we didn't quite get that. Please repeat";
+                speakWords(wrongText);
+                mContinuousRecognizer.startListening();
+            }
         }
-        if(recordSet && isReps && isWeight) {
-            addSet(reps, weight);
-        }
+//        for(int i = 0; i < words.length; i++) {
+//            if(words[i].equals("record")) {
+//                Log.e("RECORD INDEX", i);
+//                recordSet = true;
+//            }
+//            if(recordSet) {
+//                if(words[i].equals("reps") && i > 0) {
+//                    try {
+//                        reps = Integer.parseInt(words[i-1]);
+//                        isReps = true;
+//                    } catch(NumberFormatException e) {
+//                        // handle invalid input
+//                        isReps = false;
+//                    }
+//                }
+//                else if(words[i].equals("pounds") && i > 0) {
+//                    try {
+//                        weight = Float.parseFloat(words[i-1]);
+//                        isReps = true;
+//                    } catch(NumberFormatException e) {
+//                        // handle invalid input
+//                        isReps = false;
+//                    }
+//                }
+//            }
+//        }
+//        if(recordSet && isReps && isWeight) {
+//            addSet(reps, weight);
+//        }
     }
 }
