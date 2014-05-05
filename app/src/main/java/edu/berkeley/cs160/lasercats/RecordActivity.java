@@ -3,6 +3,7 @@ package edu.berkeley.cs160.lasercats;
 import android.content.DialogInterface;
 import android.os.CountDownTimer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;

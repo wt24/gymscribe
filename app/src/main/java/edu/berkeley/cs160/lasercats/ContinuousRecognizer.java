@@ -30,6 +30,7 @@ public class ContinuousRecognizer implements RecognitionListener {
         mRecognizer.setRecognitionListener(this);
     }
 
+    // sets the callback to RecordActivity context
     public void setContinuousRecognizerCallback(ContinuousRecognizerCallback cb) {
         mCallback = cb;
     }
