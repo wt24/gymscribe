@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
@@ -48,6 +49,9 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
     // TTS stuff
     private int MY_DATA_CHECK_CODE = 0;
     private TextToSpeech myTTS;
+    boolean saidTwoNums = false;
+    int repsResult = 0;
+    int weightResult = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -307,13 +311,44 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         boolean isWeight = false;
         int reps = 0;
         float weight = 0;
-        if (words[0].equals("record")) {
-            recordSet = true;
-        } else {
-            Log.e("not working", words[0]);
-        }
+        // storing numbers for next onResult
 
-        if (recordSet) {
+        if (words[0].equals("record") || words[0].equals("because") || words[0].equals("décor") || words[0].equals("workin") || words[0].equals("week")) {
+            recordSet = true;
+        }
+        if (saidTwoNums) {
+            Log.e("saidTwoNums", "IN HERE");
+            if (words[0].equals("yes") || words[0].equals("yeah")) {
+                saidTwoNums = false;
+                Log.e("saidTwoNums", "IN YES");
+                addSet(repsResult, weightResult);
+                mContinuousRecognizer.stopListening();
+                String confirmed = "The set is recorded";
+                speakWords(confirmed);
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mContinuousRecognizer.startListening();
+                    }
+                }, 2000);
+            } else if (words[0].equals("No") || words[0].equals("nope") || words[0].equals("no")) {
+                saidTwoNums = false;
+                mContinuousRecognizer.stopListening();
+                String tryAgain = "Okay please try again";
+                speakWords(tryAgain);
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mContinuousRecognizer.startListening();
+                    }
+                }, 2000);
+            } else {
+                Log.e("WRONG WORD for confirmation", "IGNORING because not yes or no");
+            }
+        } else if (recordSet) {
+            Log.e("recordSet", "IN HERE");
             mContinuousRecognizer.stopListening();
             List<String> numbers = new ArrayList<String>();
             for (int i=0; i< words.length; i++) {
@@ -323,47 +358,34 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
                 }
             }
             if (numbers.size() >= 2) {
+                saidTwoNums = true;
+                repsResult = Integer.parseInt(numbers.get(0));
+                weightResult = Integer.parseInt(numbers.get(1));
                 mContinuousRecognizer.stopListening();
-                addSet(Integer.parseInt(numbers.get(0)), Integer.parseInt(numbers.get(1)));
                 String correctText = "Did you say " + numbers.get(0) + " sets of " +  numbers.get(1) + "?";
                 Log.e("saying", correctText);
                 speakWords(correctText);
-                mContinuousRecognizer.startListening();
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mContinuousRecognizer.startListening();
+                    }
+                }, 2500);
             } else {
                 mContinuousRecognizer.stopListening();
                 String wrongText = "Sorry we didn't quite get that. Please repeat";
                 speakWords(wrongText);
-                mContinuousRecognizer.startListening();
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mContinuousRecognizer.startListening();
+                    }
+                }, 4000);
             }
+        } else {
+            Log.e("WRONG WORD", "IGNORING");
         }
-//        for(int i = 0; i < words.length; i++) {
-//            if(words[i].equals("record")) {
-//                Log.e("RECORD INDEX", i);
-//                recordSet = true;
-//            }
-//            if(recordSet) {
-//                if(words[i].equals("reps") && i > 0) {
-//                    try {
-//                        reps = Integer.parseInt(words[i-1]);
-//                        isReps = true;
-//                    } catch(NumberFormatException e) {
-//                        // handle invalid input
-//                        isReps = false;
-//                    }
-//                }
-//                else if(words[i].equals("pounds") && i > 0) {
-//                    try {
-//                        weight = Float.parseFloat(words[i-1]);
-//                        isReps = true;
-//                    } catch(NumberFormatException e) {
-//                        // handle invalid input
-//                        isReps = false;
-//                    }
-//                }
-//            }
-//        }
-//        if(recordSet && isReps && isWeight) {
-//            addSet(reps, weight);
-//        }
     }
 }
