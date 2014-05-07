@@ -15,15 +15,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
-        <edu.berkeley.cs160.lasercats.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:geekui="http://schemas.android.com/apk/res-auto"
-            android:id="@android:id/text1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Hello, Welcome to Gym Scribe"
-            android:textColor="@color/white"
-            geekui:customTypeface="Bariol_Regular.ttf" />
+
     </FrameLayout>
 
     <!-- android:layout_gravity="start" tells DrawerLayout to treat
