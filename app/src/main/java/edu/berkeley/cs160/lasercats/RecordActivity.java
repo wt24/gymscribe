@@ -3,7 +3,6 @@ package edu.berkeley.cs160.lasercats;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
@@ -332,7 +331,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         }
         if (saidTwoNums) {
             Log.e("saidTwoNums", "IN HERE");
-            if (words[0].equals("yes") || words[0].equals("yeah")) {
+            if (words[0].equals("yes") || words[0].equals("yeah") || words[0].equals("yup") || words[0].equals("sure")) {
                 saidTwoNums = false;
                 Log.e("saidTwoNums", "IN YES");
                 addSet(repsResult, weightResult);
@@ -376,7 +375,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
                 repsResult = Integer.parseInt(numbers.get(0));
                 weightResult = Integer.parseInt(numbers.get(1));
                 mContinuousRecognizer.stopListening();
-                String correctText = "Did you say " + numbers.get(0) + " sets of " +  numbers.get(1) + "?";
+                String correctText = "Did you say " + numbers.get(0) + " reps of " +  numbers.get(1) + "?";
                 Log.e("saying", correctText);
                 speakWords(correctText);
                 final Handler handler = new Handler();
