@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.berkeley.cs160.lasercats">
+    package="edu.berkeley.cs160.lasercats" >
 
     <application
         android:name="com.activeandroid.app.Application"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-        <meta-data android:name="AA_DB_NAME" android:value="exercises.sqlite" />
-        <meta-data android:name="AA_DB_VERSION" android:value="5" />
+        android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="exercises.sqlite" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="5" />
+
         <activity
             android:name="edu.berkeley.cs160.lasercats.MainActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,26 +27,29 @@
         </activity>
         <activity
             android:name="edu.berkeley.cs160.lasercats.RecordActivity"
-            android:label="@string/title_activity_record"></activity>
+            android:label="@string/title_activity_record" />
         <activity
-            android:name=".HistoryActivity"
-            android:label="@string/title_activity_past"></activity>
+            android:name="edu.berkeley.cs160.lasercats.HistoryActivity"
+            android:label="@string/title_activity_past" />
         <activity
             android:name="edu.berkeley.cs160.lasercats.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
         <activity
             android:name="edu.berkeley.cs160.lasercats.PastActivityFragments.SelectExercise"
-            android:label="@string/title_activity_select_exercise"></activity>
+            android:label="@string/title_activity_select_exercise" />
 
         <provider
             android:name="edu.berkeley.cs160.lasercats.PastActivityFragments.extendedcalendarview.CalendarProvider"
             android:authorities="com.tyczj.extendedcalendarview.calendarprovider" />
-
-
         <provider
             android:name="com.tyczj.extendedcalendarview.CalendarProvider"
-            android:permission="signature"
-            android:authorities="com.tyczj.extendedcalendarview.calendarprovider" />
+            android:authorities="com.tyczj.extendedcalendarview.calendarprovider"
+            android:permission="signature" />
+
+        <activity
+            android:name="edu.berkeley.cs160.lasercats.HelpActivity"
+            android:label="@string/title_activity_help" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />

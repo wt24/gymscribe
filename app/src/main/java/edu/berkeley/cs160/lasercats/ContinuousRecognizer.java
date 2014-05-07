@@ -1,16 +1,13 @@
 package edu.berkeley.cs160.lasercats;
 
-/**
- * Created by ziranshang on 4/28/14.
- */
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
+
+import java.util.ArrayList;
 
 public class ContinuousRecognizer implements RecognitionListener {
 
@@ -68,13 +65,42 @@ public class ContinuousRecognizer implements RecognitionListener {
     }
 
     @Override
-    public void onError(int arg0) {
-        Log.d(TAG, "onError");
-        
-        Log.d(TAG, "error: " + String.valueOf(arg0));
-        if (arg0 == 7) {
-            startListening();
+    public void onError(int error) {
+        Log.e(TAG, "error: " + String.valueOf(error));
+        String mError = "";
+        switch (error) {
+            case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
+                mError = " network timeout";
+                startListening();
+                break;
+            case SpeechRecognizer.ERROR_NETWORK:
+                mError = " network" ;
+//                Toast.makeText(this, "Please check data bundle or network settings", Toast.LENGTH_LONG).show();
+                return;
+            case SpeechRecognizer.ERROR_AUDIO:
+                mError = " audio";
+                break;
+            case SpeechRecognizer.ERROR_SERVER:
+                mError = " server";
+                break;
+            case SpeechRecognizer.ERROR_CLIENT:
+                mError = " client";
+                break;
+            case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
+                mError = " speech time out" ;
+                startListening();
+                break;
+            case SpeechRecognizer.ERROR_NO_MATCH:
+                mError = " no match" ;
+                break;
+            case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
+                mError = " recogniser busy" ;
+                break;
+            case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
+                mError = " insufficient permissions" ;
+                break;
         }
+        Log.e(TAG,  "Error: " +  error + " - " + mError);
     }
 
     @Override
