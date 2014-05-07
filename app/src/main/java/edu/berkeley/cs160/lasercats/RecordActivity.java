@@ -142,7 +142,6 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
     protected void loadSets() {
         // getting all exercises
         sets = new ArrayList<ExerciseSet>(ExerciseSet.getAllForExercise(exercise));
-        System.out.println(">>>>>>>>>>>>>>> SETS: " + sets);
 
         // just converting it to Strings
         setStrings = new ArrayList<String>();

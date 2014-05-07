@@ -5,16 +5,19 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_record">RecordActivity</string>
-    <string name="title_activity_past">History</string>
+    <string name="title_activity_past">History by Exercise</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_help">Help</string>
+    <string name="view_overall_activity">History By Date</string>
 
     <string-array name="navi_items_array">
         <item>Exercises</item>
-        <item>History</item>
+        <item>History by Exercise</item>
         <item>Settings</item>
         <item>Help</item>
+        <item>History By Date</item>
     </string-array>
+
     <string-array name="exercise_items_array">
         <item>Squat</item>
         <item>Leg press</item>
