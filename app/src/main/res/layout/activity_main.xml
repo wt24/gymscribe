@@ -36,8 +36,11 @@
 
         <EditText
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText" />
+            android:layout_height="50dp"
+            android:id="@+id/editText"
+            android:maxLines="1"
+            android:background="@drawable/rounded_corner"
+            android:paddingLeft="15dp"/>
 
         <ListView
             android:layout_width="fill_parent"

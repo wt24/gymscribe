@@ -9,10 +9,11 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:id="@+id/searchExercisesInputBox"
-        android:gravity="center"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:background="@drawable/rounded_corner"
+        android:paddingLeft="15dp"/>
 
     <ListView
         android:layout_width="fill_parent"
