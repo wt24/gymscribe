@@ -132,10 +132,10 @@ public class ExerciseSet extends Model {
      * @return
      */
     public static Date[] startEndOfDate(Date d) {
-        Long dateInMilliseconds = d.getTime();
+        Long dateInMilliseconds = d.getTime() - 25200000;
         Long secondsMinutesHoursIntoDate = dateInMilliseconds % 86400000;
-        Date startDate = new Date(dateInMilliseconds - secondsMinutesHoursIntoDate);
-        Date enDate = new Date(dateInMilliseconds - secondsMinutesHoursIntoDate + 86399000); // 23:59:59
+        Date startDate = new Date(dateInMilliseconds - secondsMinutesHoursIntoDate + 25200000);
+        Date enDate = new Date(dateInMilliseconds - secondsMinutesHoursIntoDate + 86399000 + 25200000); // 23:59:59
         Date[] result = {startDate, enDate};
         return result;
     }

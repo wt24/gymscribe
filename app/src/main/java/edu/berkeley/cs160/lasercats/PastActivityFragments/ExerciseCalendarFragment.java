@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidListener;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -46,6 +48,19 @@ public class ExerciseCalendarFragment extends Fragment{
         populateCalendarWorkoutDays(calendarView);
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.add(R.id.child, calendarView).commit();
+
+        final CaldroidListener listener = new CaldroidListener() {
+            @Override
+            public void onSelectDate(java.util.Date date, View view) {
+                Exercise e = Exercise.getExerciseByName(exerciseName).get(0);
+                java.sql.Date d = new Date(date.getTime());
+                List<ExerciseSet> sets = ExerciseSet.getAllByExerciseAndDate(e, d);
+                System.out.println("DATE from Calendar: " + date + ", " + date.getTime());
+
+                System.out.println(sets);
+            }
+        };
+        calendarView.setCaldroidListener(listener);
 
         return rootView;
     }
