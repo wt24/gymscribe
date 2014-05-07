@@ -48,6 +48,7 @@
         android:orientation="vertical"
         android:id="@+id/chartView"
         android:layout_gravity="bottom"
-        android:layout_weight=".96">
+        android:layout_weight=".96"
+        android:layout_marginLeft="5dp">
     </LinearLayout>
 </LinearLayout>
