@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
 
+import edu.berkeley.cs160.lasercats.HistoryByDateFragments.ExerciseAndSetsByDateFragment;
 import edu.berkeley.cs160.lasercats.Models.Exercise;
 import edu.berkeley.cs160.lasercats.Models.ExerciseSet;
 import edu.berkeley.cs160.lasercats.R;
@@ -80,5 +81,11 @@ public class ExerciseCalendarFragment extends Fragment{
         System.out.println("DATE from Calendar: " + date + ", " + date.getTime());
 
         System.out.println(sets);
+
+        ExerciseAndSetsByDateFragment frag = new ExerciseAndSetsByDateFragment(sets);
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.content_frame, frag);
+        fragmentTransaction.addToBackStack("tag");
+        fragmentTransaction.commit();
     }
 }
