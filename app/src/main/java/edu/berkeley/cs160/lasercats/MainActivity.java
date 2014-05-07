@@ -85,7 +85,7 @@ public class MainActivity extends BaseNavigationDrawerActivity {
     private void setupSearchBar() {
         searchBar = (EditText) findViewById(R.id.editText);
 
-        searchBar.setHint("Search for an Exercise");
+        searchBar.setHint("Search for an exercise...");
         searchBar.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) { }

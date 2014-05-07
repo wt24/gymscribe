@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">LaserCats</string>
+    <string name="app_name">Gym Scribe</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_record">RecordActivity</string>
@@ -16,6 +16,7 @@
         <item>Settings</item>
         <item>Help</item>
         <item>History By Date</item>
+        <item>FAQ</item>
     </string-array>
 
     <string-array name="exercise_items_array">

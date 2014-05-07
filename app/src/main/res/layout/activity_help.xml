@@ -16,6 +16,192 @@
         android:paddingTop="@dimen/activity_vertical_margin">
 
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:paddingLeft="9dip"
+            android:paddingRight="9dip">
+
+            <edu.berkeley.cs160.lasercats.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+                android:id="@android:id/text1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="FAQ"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                geekui:customTypeface="Bariol_Regular.ttf" />
+
+            <TextView
+                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+                android:id="@android:id/text1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="How do I search for an exercise?"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="4dip"
+                android:fontFamily="sans-serif"  />
+
+            <edu.berkeley.cs160.lasercats.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+                android:id="@android:id/text1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="1.  Click on the top-left corner of the app to show the sidebar."
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:lineSpacingExtra="5dp"
+                geekui:customTypeface="Bariol_Regular.ttf" />
+
+            <edu.berkeley.cs160.lasercats.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+                android:id="@android:id/text1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="2.  Click on the “exercises” tab."
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:lineSpacingExtra="5dp"
+                geekui:customTypeface="Bariol_Regular.ttf" />
+
+            <edu.berkeley.cs160.lasercats.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+                android:id="@android:id/text1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="3.  Find an exercise by filtering with the search bar or scrolling down the list."
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:lineSpacingExtra="5dp"
+                geekui:customTypeface="Bariol_Regular.ttf" />
+
+
+            <TextView
+                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+                android:id="@android:id/text1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="How do I record a set by voice?"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="4dip"
+                android:fontFamily="sans-serif"  />
+
+
+            <edu.berkeley.cs160.lasercats.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+                android:id="@android:id/text1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="1.  Click the green “Record” button on the bottom of the screen."
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:lineSpacingExtra="5dp"
+                geekui:customTypeface="Bariol_Regular.ttf" />
+
+            <edu.berkeley.cs160.lasercats.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+                android:id="@android:id/text1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="2.  Speak to your phone or headphones-mic with the number of reps and the weight."
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:lineSpacingExtra="5dp"
+                geekui:customTypeface="Bariol_Regular.ttf" />
+
+
+            <edu.berkeley.cs160.lasercats.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+                android:id="@android:id/text1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="3.  Start with the word “record” followed by the number of reps and then by the amount of weight. For example, you may say “record 10 sets at 100 pounds.”"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:lineSpacingExtra="5dp"
+                geekui:customTypeface="Bariol_Regular.ttf" />
+
+            <TextView
+                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+                android:id="@android:id/text1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="How do I manually record a set?"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="4dip"
+                android:fontFamily="sans-serif"  />
+
+            <edu.berkeley.cs160.lasercats.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+                android:id="@android:id/text1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="1.  Click the “Log a set” button on the top-left."
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:lineSpacingExtra="5dp"
+                geekui:customTypeface="Bariol_Regular.ttf" />
+
+            <edu.berkeley.cs160.lasercats.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+                android:id="@android:id/text1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="2.  Enter the number of reps and the weight and click the “Add to Log” button."
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:lineSpacingExtra="5dp"
+                geekui:customTypeface="Bariol_Regular.ttf" />
+
+
+            <TextView
+                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+                android:id="@android:id/text1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="How do I delete a set?"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="4dip"
+                android:fontFamily="sans-serif"  />
+
+            <edu.berkeley.cs160.lasercats.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+                android:id="@android:id/text1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="1.  Hold down on a specific set on the exercise screen"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:lineSpacingExtra="5dp"
+                geekui:customTypeface="Bariol_Regular.ttf" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
     </FrameLayout>
 
     <!-- android:layout_gravity="start" tells DrawerLayout to treat

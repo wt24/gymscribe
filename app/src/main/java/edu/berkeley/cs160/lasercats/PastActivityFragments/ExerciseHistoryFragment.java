@@ -2,6 +2,7 @@ package edu.berkeley.cs160.lasercats.PastActivityFragments;
 
 import android.app.Fragment;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,7 +106,9 @@ public class ExerciseHistoryFragment extends Fragment {
         mRenderer.setShowGridY(true);
         mRenderer.setLabelsTextSize(16);
         mRenderer.setPointSize(5);
-
+        mRenderer.setYLabelsAlign(Paint.Align.RIGHT);
+        mRenderer.setYLabelsPadding(5.0f);
+        mRenderer.setXLabelsAlign(Paint.Align.RIGHT);
         mCurrentSeries = new XYSeries("Max Weight");
         mDataset.addSeries(mCurrentSeries);
         mCurrentRenderer = new XYSeriesRenderer();

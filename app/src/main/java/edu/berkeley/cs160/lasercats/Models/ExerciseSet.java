@@ -7,14 +7,10 @@ import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
 import com.activeandroid.query.Select;
 
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * Created by stpham on 4/16/14.
@@ -32,8 +28,7 @@ public class ExerciseSet extends Model {
     public Exercise exercise;
 
     // constructors
-    public ExerciseSet() {
-    }
+    public ExerciseSet() { }
 
     public ExerciseSet(int numReps, float weight) {
         this.numReps = numReps;
@@ -70,7 +65,6 @@ public class ExerciseSet extends Model {
 
     /**
      * This will query for sets between 12:00am and 11:59:59pm of given date
-     *
      * @param e Associated Exercise
      * @param d Given day to query
      * @return
@@ -82,10 +76,9 @@ public class ExerciseSet extends Model {
 
     /**
      * Finds sets for given date range
-     *
-     * @param e         Associated Exercise
+     * @param e Associated Exercise
      * @param startDate Start of date range
-     * @param endDate   End of date range
+     * @param endDate End of date range
      * @return
      */
     public static List<ExerciseSet> getAllByExerciseAndRangeOfDate(Exercise e, Date startDate, Date endDate) {
@@ -97,26 +90,9 @@ public class ExerciseSet extends Model {
                 .execute();
     }
 
-    public static List<Date> getUniqueDatesForAllSets() {
-        List<ExerciseSet> allSetsByExercise = new Select()
-                .from(ExerciseSet.class)
-                .orderBy("DateOfSet ASC")
-                .execute();
-        List<Date> listOfUniqueDatesByDay = new ArrayList<Date>();
-        for (int i = 0; i < allSetsByExercise.size(); i++) {
-            ExerciseSet currentExerciseSet = allSetsByExercise.get(i);
-            Date[] currentStartEnd = startEndOfDate(currentExerciseSet.dateOfSet);
-            if (!listOfUniqueDatesByDay.contains(currentStartEnd[0])) {
-                listOfUniqueDatesByDay.add(currentStartEnd[0]);
-            }
-        }
-        return listOfUniqueDatesByDay;
-    }
-
     /**
      * Finds the exercise object with the given name and calls the UniqueDates function whose param
      * is an exercise object
-     *
      * @param e String of exercise to get Unique dates for
      * @return
      */
@@ -128,17 +104,16 @@ public class ExerciseSet extends Model {
     /**
      * Queries all sets associated with given Exercise and filters the list so that only unique days
      * are in the list
-     *
      * @param e Exercise object whose primary key plays an important role in the Set's exercise
      *          foreign key to query dates for
      * @return
      */
     public static List<Date> getUniqueDates(Exercise e) {
         List<ExerciseSet> allSetsByExercise = new Select()
-                .from(ExerciseSet.class)
-                .where("Exercise = ?", e.getId())
-                .orderBy("DateOfSet ASC")
-                .execute();
+                                                .from(ExerciseSet.class)
+                                                .where("Exercise = ?", e.getId())
+                                                .orderBy("DateOfSet ASC")
+                                                .execute();
         List<Date> listOfUniqueDatesByDay = new ArrayList<Date>();
         for (int i = 0; i < allSetsByExercise.size(); i++) {
             ExerciseSet currentExerciseSet = allSetsByExercise.get(i);
@@ -151,36 +126,14 @@ public class ExerciseSet extends Model {
     }
 
     /**
-     * Calls the startEndOfDate function to get the necessary UTC offsetted start and end. Then
-     * queries for necessary data
-     *
-     * @param d Date to query the objects
-     * @return
-     */
-    public static List<ExerciseSet> getAllSetsByDate(Date d) {
-        Date[] startEnd = startEndOfDate(d);
-        Date startDate = startEnd[0];
-        Date endDate = startEnd[1];
-        List<ExerciseSet> allSetsByDate = new Select()
-                .from(ExerciseSet.class)
-                .where("DateOfSet >= ? AND DateOfSet <= ?", startDate.getTime(), endDate.getTime())
-                .orderBy("DateOfSet ASC")
-                .execute();
-        return allSetsByDate;
-    }
-
-    /**
      * This functions returns a two element array whose first element zeroes the hours so that it'll
      * be 12:00am of that given day and second element is 11:59:59pm of the given day
-     *
      * @param d The day to find start and end of
      * @return
      */
     public static Date[] startEndOfDate(Date d) {
-        Long dateInMilliseconds = d.getTime();
-        //Remaining Time After 24 Hr Mod
-        Long secondsMinutesHoursIntoDate = (dateInMilliseconds - 25200000) % 86400000;
-        int offsetStart, offsetEnd;
+        Long dateInMilliseconds = d.getTime() - 25200000;
+        Long secondsMinutesHoursIntoDate = dateInMilliseconds % 86400000;
         Date startDate = new Date(dateInMilliseconds - secondsMinutesHoursIntoDate + 25200000);
         Date enDate = new Date(dateInMilliseconds - secondsMinutesHoursIntoDate + 86399000 + 25200000); // 23:59:59
         Date[] result = {startDate, enDate};
