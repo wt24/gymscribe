@@ -3,6 +3,7 @@ package edu.berkeley.cs160.lasercats;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
@@ -44,6 +45,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
     private EditText mRepsInput;
     private EditText mWeightInput;
     private Button mInputToggleBtn;
+    private Button mHistoryBtn;
     private RelativeLayout mInputSetForm;
     private ContinuousRecognizer mContinuousRecognizer;
     // TTS stuff
@@ -81,6 +83,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         });
 
         mAddToLogBtn = (Button) findViewById(R.id.addToLog);
+        mHistoryBtn = (Button) findViewById(R.id.historyButton);
         mRepsInput = (EditText) findViewById(R.id.repsInput);
         mWeightInput = (EditText) findViewById(R.id.weightInput);
 
@@ -101,6 +104,13 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
             }
         });
 
+        mHistoryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToHistory();
+            }
+        });
+
         loadSets();
 
         // So upon creating your activity, a good first step is to check for the presence of
@@ -109,6 +119,10 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
         startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
 
+    }
+
+    private void switchToHistory() {
+        selectItem(1);
     }
 
     /**
@@ -137,7 +151,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         }
 
         mListView = (ListView) findViewById(R.id.listView);
-        adapter = new ArrayAdapter<String>(this, R.layout.row, setStrings);
+        adapter = new ArrayAdapter<String>(this, R.layout.excercise_list_item, setStrings);
         mListView.setAdapter(adapter);
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override

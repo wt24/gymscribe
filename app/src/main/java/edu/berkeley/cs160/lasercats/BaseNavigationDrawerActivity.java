@@ -175,7 +175,7 @@ public class BaseNavigationDrawerActivity extends Activity {
         }
     }
 
-    private void selectItem(int position) {
+    protected void selectItem(int position) {
         // update the main content
 
         //Find Chosen Activity

@@ -86,7 +86,7 @@ public class ListOfSettingsFragment extends PreferenceFragment implements Prefer
 
     public void generateSampleData() {
         int[] listOfExerciseId = {1, 2, 3, 4, 5};
-        long[] dateOrigins = {1398038400000l, 1397779200000l, 1397865600000l}; // 4/21/2014 00:00:00, 4/18/2014 00:00:00, 4/19/2014 00:00:00
+        long[] dateOrigins = {1399507200000l, 1399334400000l, 1398988800000l}; // 4/21/2014 00:00:00, 4/18/2014 00:00:00, 4/19/2014 00:00:00
         long[] daysOffset = {1, 3, 7, 17, 20, 40, 50};
         float[] weights = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60};
         int[] reps = {6, 7, 10, 10};

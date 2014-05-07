@@ -10,12 +10,12 @@
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/darkbluenice"
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:weightSum="1">
 
         <RelativeLayout
             android:id="@+id/manualInputSetForm"
@@ -68,10 +68,9 @@
             <Button
                 android:id="@+id/addToLog"
                 android:layout_width="150dp"
-                android:layout_height="34dp"
+                android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/weightInput"
-                android:background="@drawable/roundedbutton"
                 android:layout_marginTop="20px"
                 android:text="Add to Log"
                 android:onClick="addLogButtonPressed"
@@ -84,7 +83,6 @@
             android:id="@+id/buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/darkbluenice"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -95,35 +93,22 @@
             <Button
                 android:id="@+id/manualInputToggle"
                 android:layout_width="wrap_content"
-                android:layout_height="75px"
-                android:background="@drawable/roundedbutton"
+                android:layout_height="40dp"
                 android:text=" Log a set "
-                android:layout_marginBottom="10px"
-                android:layout_marginTop="10px"
+                android:textSize="8pt"
+                android:layout_alignTop="@+id/historyButton"
                 android:layout_alignParentLeft="true"
-                android:textSize="8pt" />
+                android:layout_alignParentStart="true" />
 
             <Button
                 android:id="@+id/historyButton"
                 android:layout_width="wrap_content"
-                android:layout_height="75px"
-                android:layout_marginBottom="10px"
-                android:layout_marginTop="10px"
-                android:layout_centerInParent="true"
-                android:background="@drawable/roundedbutton"
+                android:layout_height="40dp"
                 android:text="History"
-                android:textSize="8pt" />
-
-            <Button
-                android:id="@+id/editButton"
-                android:layout_width="wrap_content"
-                android:layout_height="75px"
-                android:layout_marginBottom="10px"
-                android:layout_marginTop="10px"
-                android:background="@drawable/roundedbutton"
-                android:text="Edit"
+                android:textSize="8pt"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:textSize="8pt" />
+                android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
 
@@ -131,21 +116,21 @@
         <ListView
             android:id="@+id/listView"
             android:layout_width="wrap_content"
-            android:layout_height="326dp"
+            android:layout_height="295dp"
             android:layout_above="@+id/recordButton"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_gravity="center_horizontal|top"
-            android:background="@drawable/rounded_bg" />
+            android:background="@drawable/rounded_bg"
+            android:layout_weight="0.65" />
 
         <Button
             android:id="@+id/recordButton"
             android:layout_width="match_parent"
-            android:layout_height="26dp"
+            android:layout_height="35dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="10px"
             android:background="@drawable/record_button_style"
             android:onClick="recordButtonPressed"
