@@ -360,6 +360,16 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
                     }
                 }, 2000);
             } else {
+                mContinuousRecognizer.stopListening();
+                String sayYN = "Please say yes or no";
+                speakWords(sayYN);
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mContinuousRecognizer.startListening();
+                    }
+                }, 2000);
                 Log.e("WRONG WORD for confirmation", "IGNORING because not yes or no");
                 mContinuousRecognizer.startListening();
             }

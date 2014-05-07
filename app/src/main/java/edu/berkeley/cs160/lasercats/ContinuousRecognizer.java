@@ -95,7 +95,6 @@ public class ContinuousRecognizer implements RecognitionListener {
                 break;
             case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
                 mError = " recogniser busy" ;
-                startListening();
                 break;
             case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
                 mError = " insufficient permissions" ;
