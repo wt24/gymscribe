@@ -325,8 +325,8 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
                 res[i] = "1";
             } else if (res[i].equals("10th")) {
                 res[i] = "10";
-            } else if (res[i].equals("thirty")) {
-                res[i] = "10";
+            } else if (res[i].equals("dirty")) {
+                res[i] = "30";
             }
         }
         return res;
@@ -344,7 +344,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         float weight = 0;
         // storing numbers for next onResult
 
-        if (words[0].equals("record") || words[0].equals("because") || words[0].equals("décor") || words[0].equals("workin") || words[0].equals("week") || words[0].equals("word") || words[0].equals("a") || words[0].equals("quick") ||  words[0].equals("discord")) {
+        if (words[0].equals("record") || words[0].equals("because") || words[0].equals("décor") || words[0].equals("workin") || words[0].equals("week") || words[0].equals("word") || words[0].equals("a") || words[0].equals("quick") ||  words[0].equals("discord") || words[0].equals("recorded")) {
             recordSet = true;
         }
         if (saidTwoNums) {
