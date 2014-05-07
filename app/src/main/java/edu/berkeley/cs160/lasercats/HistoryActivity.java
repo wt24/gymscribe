@@ -8,6 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import java.sql.Date;
+
+import edu.berkeley.cs160.lasercats.Models.Exercise;
+import edu.berkeley.cs160.lasercats.Models.ExerciseSet;
 import edu.berkeley.cs160.lasercats.PastActivityFragments.ExerciseCalendarFragment;
 import edu.berkeley.cs160.lasercats.PastActivityFragments.ExerciseCallbacks;
 import edu.berkeley.cs160.lasercats.PastActivityFragments.ExerciseHistoryFragment;
