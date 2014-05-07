@@ -20,7 +20,7 @@ public class ViewOverallActivity extends BaseNavigationDrawerActivity {
     SetsCalendarFragment currentCalendarFrag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        positionOfActivityInList = 4;
+        positionOfActivityInList = 2;
         mainLayoutId = R.layout.activity_history_by_date;
         super.onCreate(savedInstanceState);
 

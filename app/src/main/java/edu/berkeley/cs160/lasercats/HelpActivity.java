@@ -9,7 +9,7 @@ public class HelpActivity extends BaseNavigationDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        positionOfActivityInList = 3;
+        positionOfActivityInList = 4;
         mainLayoutId = R.layout.activity_help;
         super.onCreate(savedInstanceState);
     }
