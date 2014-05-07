@@ -140,8 +140,9 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
      */
     protected void loadSets() {
         // getting all exercises
-        sets = new ArrayList<ExerciseSet>(ExerciseSet.getAllForExercise(exercise));
-        System.out.println(">>>>>>>>>>>>>>> SETS: " + sets);
+        Date d = new Date();
+        java.sql.Date date = new java.sql.Date(d.getTime());
+        sets = new ArrayList<ExerciseSet>(ExerciseSet.getAllByExerciseAndDate(exercise, date));
 
         // just converting it to Strings
         setStrings = new ArrayList<String>();
