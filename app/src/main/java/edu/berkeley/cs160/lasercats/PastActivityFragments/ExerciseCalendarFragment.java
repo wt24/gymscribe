@@ -52,12 +52,7 @@ public class ExerciseCalendarFragment extends Fragment{
         final CaldroidListener listener = new CaldroidListener() {
             @Override
             public void onSelectDate(java.util.Date date, View view) {
-                Exercise e = Exercise.getExerciseByName(exerciseName).get(0);
-                java.sql.Date d = new Date(date.getTime());
-                List<ExerciseSet> sets = ExerciseSet.getAllByExerciseAndDate(e, d);
-                System.out.println("DATE from Calendar: " + date + ", " + date.getTime());
-
-                System.out.println(sets);
+                dateSelected(date);
             }
         };
         calendarView.setCaldroidListener(listener);
@@ -73,5 +68,14 @@ public class ExerciseCalendarFragment extends Fragment{
             textColorForDateMap.put(new java.util.Date(currentDate.getTime()), R.color.fishfood);
         }
         calendarView.setBackgroundResourceForDates(textColorForDateMap);
+    }
+
+    private void dateSelected(java.util.Date date) {
+        Exercise e = Exercise.getExerciseByName(exerciseName).get(0);
+        java.sql.Date d = new Date(date.getTime());
+        List<ExerciseSet> sets = ExerciseSet.getAllByExerciseAndDate(e, d);
+        System.out.println("DATE from Calendar: " + date + ", " + date.getTime());
+
+        System.out.println(sets);
     }
 }
