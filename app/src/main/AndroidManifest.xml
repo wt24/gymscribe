@@ -37,7 +37,9 @@
         <activity
             android:name="edu.berkeley.cs160.lasercats.PastActivityFragments.SelectExercise"
             android:label="@string/title_activity_select_exercise" />
-
+        <activity
+            android:name="edu.berkeley.cs160.lasercats.HelpActivity"
+            android:label="@string/title_activity_help" />
         <provider
             android:name="edu.berkeley.cs160.lasercats.PastActivityFragments.extendedcalendarview.CalendarProvider"
             android:authorities="com.tyczj.extendedcalendarview.calendarprovider" />
@@ -46,10 +48,7 @@
             android:authorities="com.tyczj.extendedcalendarview.calendarprovider"
             android:permission="signature" />
 
-        <activity
-            android:name="edu.berkeley.cs160.lasercats.HelpActivity"
-            android:label="@string/title_activity_help" >
-        </activity>
+
     </application>
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
