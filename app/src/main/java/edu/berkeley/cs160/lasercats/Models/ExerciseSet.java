@@ -53,7 +53,7 @@ public class ExerciseSet extends Model {
     }
 
     public String toString() {
-        return exercise.name + " Weight " + weight + " Reps" + numReps;
+        return exercise.name + ": " + numReps + " reps at " + weight + " pounds";
     }
 
     public static List<ExerciseSet> getAll() {

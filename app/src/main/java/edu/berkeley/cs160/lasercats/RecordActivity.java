@@ -84,6 +84,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         mAddToLogBtn = (Button) findViewById(R.id.addToLog);
         mHistoryBtn = (Button) findViewById(R.id.historyButton);
         mRepsInput = (EditText) findViewById(R.id.repsInput);
+        mRepsInput.setNextFocusDownId(R.id.weightInput);
         mWeightInput = (EditText) findViewById(R.id.weightInput);
 
         mAddToLogBtn.setOnClickListener(new View.OnClickListener() {
