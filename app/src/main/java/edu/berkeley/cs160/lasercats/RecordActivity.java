@@ -317,10 +317,26 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         }
     }
 
+    public String[] convertToNumbers(String[] res) {
+        for (int i = 0; i < res.length; i++) {
+            if (res[i].equals("four")) {
+                res[i] = "4";
+            } else if (res[i].equals("one")) {
+                res[i] = "1";
+            } else if (res[i].equals("10th")) {
+                res[i] = "10";
+            } else if (res[i].equals("thirty")) {
+                res[i] = "10";
+            }
+        }
+        return res;
+    }
+
     @Override
     public void onResult(String result) {
+        String [] wordsBefore = result.split(" ");
+        String [] words = convertToNumbers(wordsBefore);
         Log.e("RESULT", result);
-        String [] words = result.split(" ");
         boolean recordSet = false;
         boolean isReps = false;
         boolean isWeight = false;
@@ -328,7 +344,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         float weight = 0;
         // storing numbers for next onResult
 
-        if (words[0].equals("record") || words[0].equals("because") || words[0].equals("décor") || words[0].equals("workin") || words[0].equals("week") || words[0].equals("word") || words[0].equals("a") || words[0].equals("quick")) {
+        if (words[0].equals("record") || words[0].equals("because") || words[0].equals("décor") || words[0].equals("workin") || words[0].equals("week") || words[0].equals("word") || words[0].equals("a") || words[0].equals("quick") ||  words[0].equals("discord")) {
             recordSet = true;
         }
         if (saidTwoNums) {
@@ -388,7 +404,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
                 repsResult = Integer.parseInt(numbers.get(0));
                 weightResult = Integer.parseInt(numbers.get(1));
                 mContinuousRecognizer.stopListening();
-                String correctText = "Did you say " + numbers.get(0) + " reps of " +  numbers.get(1) + "?";
+                String correctText = "Did you say " + numbers.get(0) + " reps of " +  numbers.get(1) + " pounds?";
                 Log.e("saying", correctText);
                 speakWords(correctText);
                 final Handler handler = new Handler();
