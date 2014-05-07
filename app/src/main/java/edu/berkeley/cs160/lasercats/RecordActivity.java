@@ -326,7 +326,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
         float weight = 0;
         // storing numbers for next onResult
 
-        if (words[0].equals("record") || words[0].equals("because") || words[0].equals("décor") || words[0].equals("workin") || words[0].equals("week")) {
+        if (words[0].equals("record") || words[0].equals("because") || words[0].equals("décor") || words[0].equals("workin") || words[0].equals("week") || words[0].equals("word") || words[0].equals("a") || words[0].equals("quick")) {
             recordSet = true;
         }
         if (saidTwoNums) {
