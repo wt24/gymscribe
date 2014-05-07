@@ -92,6 +92,7 @@ public class ContinuousRecognizer implements RecognitionListener {
                 break;
             case SpeechRecognizer.ERROR_NO_MATCH:
                 mError = " no match" ;
+                startListening();
                 break;
             case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
                 mError = " recogniser busy" ;
