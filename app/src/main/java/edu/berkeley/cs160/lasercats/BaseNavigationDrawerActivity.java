@@ -70,7 +70,7 @@ public class BaseNavigationDrawerActivity extends FragmentActivity {
     private String[] mNavigationItems;
 
     //Add to this when we add more Activities
-    Class activityList[] = {MainActivity.class, HistoryActivity.class, SettingsActivity.class, HelpActivity.class};
+    Class activityList[] = {MainActivity.class, HistoryActivity.class, SettingsActivity.class, HelpActivity.class, ViewOverallActivity.class};
 
     //!!!!!! SET THIS IN CHILD CLASSES BEFORE CALLING BASE ONCREATE !!!!!//
     protected int positionOfActivityInList = 0;

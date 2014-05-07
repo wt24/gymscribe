@@ -1,10 +1,9 @@
-package edu.berkeley.cs160.lasercats.PastActivityFragments;
+package edu.berkeley.cs160.lasercats.HistoryByDateFragments;
 
 
 import android.app.Fragment;
-import android.os.Bundle;
 import android.app.FragmentTransaction;
-import android.text.format.Time;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,26 +12,23 @@ import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.TimeZone;
 
 import edu.berkeley.cs160.lasercats.Models.Exercise;
 import edu.berkeley.cs160.lasercats.Models.ExerciseSet;
 import edu.berkeley.cs160.lasercats.R;
 
-public class ExerciseCalendarFragment extends Fragment{
+public class SetsCalendarFragment extends Fragment{
     private String exerciseName;
+    CaldroidFragment calendarView;
 
-    public ExerciseCalendarFragment() {
+    public SetsCalendarFragment() {
     }
 
-    public ExerciseCalendarFragment(String aExercise) {
+    public SetsCalendarFragment(String aExercise) {
         super();
         exerciseName = aExercise;
     }
@@ -41,7 +37,7 @@ public class ExerciseCalendarFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_exercise_calendar, container, false);
 
-        CaldroidFragment calendarView = new CaldroidFragment();
+        calendarView = new CaldroidFragment();
         Bundle args = new Bundle();
         Calendar cal = Calendar.getInstance();
         args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
@@ -52,19 +48,13 @@ public class ExerciseCalendarFragment extends Fragment{
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.add(R.id.child, calendarView).commit();
 
-        final CaldroidListener listener = new CaldroidListener() {
-            @Override
-            public void onSelectDate(java.util.Date date, View view) {
-                dateSelected(date);
-            }
-        };
-        calendarView.setCaldroidListener(listener);
+        setupListener();
 
         return rootView;
     }
 
     private void populateCalendarWorkoutDays(CaldroidFragment calendarView) {
-        List<Date> datesOfExercise = ExerciseSet.getUniqueDates(Exercise.getExerciseByName(exerciseName).get(0));
+        List<Date> datesOfExercise = ExerciseSet.getUniqueDatesForAllSets();
         HashMap <java.util.Date, Integer> textColorForDateMap = new HashMap <java.util.Date, Integer>();
         for (Iterator<Date> iter = datesOfExercise.iterator(); iter.hasNext(); ) {
             Date currentDate = iter.next();
@@ -73,12 +63,25 @@ public class ExerciseCalendarFragment extends Fragment{
         calendarView.setBackgroundResourceForDates(textColorForDateMap);
     }
 
-    private void dateSelected(java.util.Date date) {
-        Exercise e = Exercise.getExerciseByName(exerciseName).get(0);
-        java.sql.Date d = new Date(date.getTime());
-        List<ExerciseSet> sets = ExerciseSet.getAllByExerciseAndDate(e, d);
-        System.out.println("DATE from Calendar: " + date + ", " + date.getTime());
+    public void setupListener() {
+        final CaldroidListener listener = new CaldroidListener() {
 
-        System.out.println(sets);
+            @Override
+            public void onSelectDate(java.util.Date date, View view) {
+                List<ExerciseSet> workingSet = ExerciseSet.getAllSetsByDate(new java.sql.Date(date.getTime()));
+
+                ExerciseAndSetsByDateFragment newFrag = new ExerciseAndSetsByDateFragment(workingSet);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.content_frame, newFrag);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+            }
+        };
+        calendarView.setCaldroidListener(listener);
     }
 }
