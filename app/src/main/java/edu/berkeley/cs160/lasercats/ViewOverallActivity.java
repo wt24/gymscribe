@@ -1,36 +1,49 @@
 package edu.berkeley.cs160.lasercats;
 
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-import edu.berkeley.cs160.lasercats.SettingsActivityFragments.ListOfSettingsFragment;
+import com.roomorama.caldroid.CaldroidListener;
 
-// BaseNavigationDrawerActivity
+import java.util.Date;
+import java.util.List;
 
-public class SettingsActivity extends BaseNavigationDrawerActivity {
+import edu.berkeley.cs160.lasercats.HistoryByDateFragments.ExerciseAndSetsByDateFragment;
+import edu.berkeley.cs160.lasercats.HistoryByDateFragments.SetsCalendarFragment;
+import edu.berkeley.cs160.lasercats.Models.ExerciseSet;
 
+
+public class ViewOverallActivity extends BaseNavigationDrawerActivity {
+    SetsCalendarFragment currentCalendarFrag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        positionOfActivityInList = 3;
-        mainLayoutId = R.layout.activity_template;
-
+        positionOfActivityInList = 2;
+        mainLayoutId = R.layout.activity_history_by_date;
         super.onCreate(savedInstanceState);
-        // just like and intent for fragements here we tell fragementmanager to launch fragment
+
+
+        // Create new fragment and transaction
+        currentCalendarFrag = new SetsCalendarFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.content_frame, new ListOfSettingsFragment());
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack
+        transaction.replace(R.id.content_frame, currentCalendarFrag);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
         transaction.commit();
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.help, menu);
         return true;
     }
 

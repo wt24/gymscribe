@@ -40,6 +40,9 @@
         <activity
             android:name="edu.berkeley.cs160.lasercats.HelpActivity"
             android:label="@string/title_activity_help" />
+        <activity
+            android:name="edu.berkeley.cs160.lasercats.ViewOverallActivity"
+            android:label="@string/view_overall_activity" />
         <provider
             android:name="edu.berkeley.cs160.lasercats.PastActivityFragments.extendedcalendarview.CalendarProvider"
             android:authorities="com.tyczj.extendedcalendarview.calendarprovider" />
