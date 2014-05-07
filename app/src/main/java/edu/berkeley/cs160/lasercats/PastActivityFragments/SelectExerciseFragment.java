@@ -78,7 +78,7 @@ public class SelectExerciseFragment extends Fragment {
     private void setupSearchBar(View rootView) {
         searchBar = (EditText) rootView.findViewById(R.id.searchExercisesInputBox);
 
-        searchBar.setHint("Search for an Exercise");
+        searchBar.setHint("Search for an exercise...");
 
         searchBar.addTextChangedListener(new TextWatcher() {
 
