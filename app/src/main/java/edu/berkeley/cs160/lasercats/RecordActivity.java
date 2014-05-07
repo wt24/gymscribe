@@ -360,6 +360,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
                 }, 2000);
             } else {
                 Log.e("WRONG WORD for confirmation", "IGNORING because not yes or no");
+                mContinuousRecognizer.startListening();
             }
         } else if (recordSet) {
             Log.e("recordSet", "IN HERE");
@@ -376,7 +377,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
                 repsResult = Integer.parseInt(numbers.get(0));
                 weightResult = Integer.parseInt(numbers.get(1));
                 mContinuousRecognizer.stopListening();
-                String correctText = "Did you say " + numbers.get(0) + " sets of " +  numbers.get(1) + "?";
+                String correctText = "Did you say " + numbers.get(0) + " reps of " +  numbers.get(1) + "?";
                 Log.e("saying", correctText);
                 speakWords(correctText);
                 final Handler handler = new Handler();
@@ -388,7 +389,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
                 }, 2500);
             } else {
                 mContinuousRecognizer.stopListening();
-                String wrongText = "Sorry we didn't quite get that. Please repeat";
+                String wrongText = "Sorry I didn't quite get that. Please repeat";
                 speakWords(wrongText);
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -400,6 +401,7 @@ public class RecordActivity extends BaseNavigationDrawerActivity implements Cont
             }
         } else {
             Log.e("WRONG WORD", "IGNORING");
+            mContinuousRecognizer.startListening();
         }
     }
 }
