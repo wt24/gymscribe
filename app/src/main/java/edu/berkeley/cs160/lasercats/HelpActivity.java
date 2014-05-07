@@ -1,14 +1,11 @@
 package edu.berkeley.cs160.lasercats;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
 public class HelpActivity extends BaseNavigationDrawerActivity {
-
-    ViewPager viewPager=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
