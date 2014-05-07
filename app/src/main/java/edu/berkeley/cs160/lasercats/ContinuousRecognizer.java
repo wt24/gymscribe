@@ -75,7 +75,6 @@ public class ContinuousRecognizer implements RecognitionListener {
                 break;
             case SpeechRecognizer.ERROR_NETWORK:
                 mError = " network" ;
-//                Toast.makeText(this, "Please check data bundle or network settings", Toast.LENGTH_LONG).show();
                 return;
             case SpeechRecognizer.ERROR_AUDIO:
                 mError = " audio";
@@ -96,6 +95,7 @@ public class ContinuousRecognizer implements RecognitionListener {
                 break;
             case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
                 mError = " recogniser busy" ;
+                startListening();
                 break;
             case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
                 mError = " insufficient permissions" ;
